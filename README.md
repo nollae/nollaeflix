@@ -11,7 +11,7 @@ React, TypeScript, React-Query, Recoil... 을 이용하여 [ Netflix ](https://w
 🔗 site : https://main--nollaeflix.netlify.app/
 
 ## Stack
-- 코어 : React, TypeScript
+- 코어 : React, TypeScript, Node.js
 - 스타일링 : Styled Components, Framer Motion
 - 상태관리 : Recoil, React-Query, React-Hook-Form
 - CI/CD : GitHub, Netlify
