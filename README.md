@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# NollaeFlix
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React, TypeScript, React-Query, Recoil... 을 이용하여 [ Netflix ](https://www.netflix.com/kr/)를 Clone한 프로젝트입니다.
+<br/>
+필요한 데이터 저장은 localStorage를 활용하였습니다.
 
-## Available Scripts
+## Deployment
 
-In the project directory, you can run:
+🔗 site : https://main--nollaeflix.netlify.app/
 
-### `npm start`
+## Stack
+- 코어 : React, TypeScript
+- 스타일링 : Styled Components, Framer Motion
+- 상태관리 : Recoil, React-Query, React-Hook-Form
+- CI/CD : GitHub, Netlify
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## implementation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Main
+![main--nollaeflix netlify app_](https://github.com/nollae/nollaeflix/assets/54770759/c68c4057-be07-470e-9845-99f4366ee926)
 
-### `npm test`
+### SignUp
+![main--nollaeflix netlify app_ (13)](https://github.com/nollae/nollaeflix/assets/54770759/190afef0-b0e7-4fc0-a3e9-4a9c9c6dba82)
+![main--nollaeflix netlify app_ (1)](https://github.com/nollae/nollaeflix/assets/54770759/e235ae0d-6428-4d29-bf3b-9e49b85f2b4f)
+![main--nollaeflix netlify app_ (2)](https://github.com/nollae/nollaeflix/assets/54770759/9557c77a-50b5-4b16-83df-6fadf83ce07d)
+![main--nollaeflix netlify app_ (4)](https://github.com/nollae/nollaeflix/assets/54770759/2d5e8cd9-d4a2-49cf-bf20-73ae4a6e7c57)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Login
+![main--nollaeflix netlify app_ (7)](https://github.com/nollae/nollaeflix/assets/54770759/c4525d2a-d3bb-4a3e-9ae8-28def3bfcf6c)
 
-### `npm run build`
+### Home
+![main--nollaeflix netlify app_ (11)](https://github.com/nollae/nollaeflix/assets/54770759/37fc8e66-10e5-45d8-a145-f9547e6a3794)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Detail
+![main--nollaeflix netlify app_movies_653346](https://github.com/nollae/nollaeflix/assets/54770759/ebbb9786-e8e4-4f66-ba87-5174d7478de1)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Add Favorite & Like
+<img width="1437" alt="스크린샷 2024-05-22 오후 9 40 27" src="https://github.com/nollae/nollaeflix/assets/54770759/38da9303-994d-4a19-8054-5fe3560441e0" />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Series & Favorite List
 
-### `npm run eject`
+![main--nollaeflix netlify app_ (14)](https://github.com/nollae/nollaeflix/assets/54770759/5f98a12b-e665-48f3-a89c-bc9d547027fa)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
