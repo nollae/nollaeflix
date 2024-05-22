@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom'; 
+import { Link, useHistory } from 'react-router-dom'; 
 
 import { loginState, useResetAllStates } from '../atoms';
 import { useRecoilValue } from 'recoil';
@@ -393,8 +393,8 @@ function MainHeader() {
                                                     로그아웃
                                                 </LoginButton>
                                                 :
-                                                <LoginButton href="/login" role="button">
-                                                    로그인
+                                                <LoginButton role="button">
+                                                    <Link to="/login" >로그인</Link>
                                                 </LoginButton>
                                             }
                                             
