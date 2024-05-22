@@ -2,8 +2,10 @@
 
 React, TypeScript, React-Query, Recoil... 을 이용하여 [ Netflix ](https://www.netflix.com/kr/)를 Clone한 프로젝트입니다.
 <br/>
+- React v5로 구현하였습니다.
+- 영화 / TV 시리즈 데이터는 [themoviedb](https://www.themoviedb.org/) API를 활용하였습니다.
 - 필요한 데이터 저장은 localStorage를 활용하였습니다.
-- Netflix에서 나타난 모션들을 Framer Motion을 활용하였습니다.
+- Slide, Variants... 는 Framer Motion으로 구현하였습니다.
 
 ## Deployment
 
