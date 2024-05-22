@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { loginState, signupState } from '../atoms';
@@ -1694,7 +1694,9 @@ function Sign() {
                     <LogoSpan>Netflix 홈</LogoSpan>
                 </HeaderLogoContainer>
                 {/* Login */}
-                <Login href="/login">로그인</Login>
+                <Login>
+                    <Link to="/login">로그인</Link>
+                </Login>
             </HeaderContainer>
             {/* Body : Step 1/3 Main */}
             <BodyWrapper $isShow={isShowMain} >
