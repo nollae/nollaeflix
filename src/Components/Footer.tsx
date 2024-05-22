@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Footer_ = styled.footer`
+const FooterMain = styled.footer`
     display: block;
     padding-left: 2rem;
     padding-right: 2rem;
@@ -12,14 +12,14 @@ const Footer_ = styled.footer`
     font-weight: 400;
 `;
 
-const Footer_Wrapper = styled.div`
+const FooterWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     display: inherit;
     height: auto;
 `;
 
-const Footer_Container = styled.div`
+const FooterContainer = styled.div`
     display: inline-flex;
     flex-wrap: wrap;
     height: inherit;
@@ -30,7 +30,7 @@ const Footer_Container = styled.div`
     padding: 0px;
 `;
 
-const Footer_Resume_Wrapper = styled.div`
+const FooterResumeWrapper = styled.div`
     flex: 0 0 100%;
     display: inline-flex;
     flex-wrap: wrap;
@@ -40,7 +40,7 @@ const Footer_Resume_Wrapper = styled.div`
     margin-left: 0px;
 `;
 
-const Footer_Repository = styled.div`
+const FooterRepository = styled.div`
     margin-bottom: 0.75rem;
     a{
         color: rgba(255, 255, 255, 0.7);
@@ -50,21 +50,21 @@ const Footer_Repository = styled.div`
     }
 `;
 
-const Footer_About_Container = styled.div`
+const FooterAboutContainer = styled.div`
     margin: 0.75rem 0;
     width: 100%;
     font-size: 0.875rem;
     font-weight: 400;
 `;
 
-const Footer_About_Wrapper = styled.div`
+const FooterAboutWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     display: inherit;
     height: auto;
 `;
 
-const Footer_About_List = styled.ul`
+const FooterAboutList = styled.ul`
     display: inline-flex;
     flex-wrap: wrap;
     height: inherit;
@@ -75,7 +75,7 @@ const Footer_About_List = styled.ul`
     padding: 0px;
 `;
 
-const Footer_About = styled.li`
+const FooterAbout = styled.li`
     flex: 0 0 calc(25% - 0.75rem);
     display: inline-flex;
     flex-wrap: wrap;
@@ -105,68 +105,68 @@ const Footer_About = styled.li`
 function Footer(){
 
     return (
-        <Footer_>
-            <Footer_Wrapper>
-                <Footer_Container>
+        <FooterMain>
+            <FooterWrapper>
+                <FooterContainer>
                     {/* 이력서 */}
-                    <Footer_Resume_Wrapper>
-                        <Footer_Repository>
+                    <FooterResumeWrapper>
+                        <FooterRepository>
                             Netflix Clone Project of Nollae : 💾 Repository &nbsp;
-                            <a>https://github.com/nollae/netflix_clone</a>
+                            <a href='https://github.com/nollae/nollaeflix'>https://github.com/nollae/nollaeflix</a>
                             <br />
-                        </Footer_Repository>
-                    </Footer_Resume_Wrapper>
-                    <Footer_Resume_Wrapper>
-                        <Footer_Repository>
+                        </FooterRepository>
+                    </FooterResumeWrapper>
+                    <FooterResumeWrapper>
+                        <FooterRepository>
                             <b style={{fontWeight:900}}>Nollae</b> 에 대해서 더 알고싶으신가요?
-                        </Footer_Repository>
-                    </Footer_Resume_Wrapper>
-                    <Footer_Resume_Wrapper>
-                        <Footer_Repository style={{marginTop: "0.55rem", marginBottom: "0.15rem"}}>
+                        </FooterRepository>
+                    </FooterResumeWrapper>
+                    <FooterResumeWrapper>
+                        <FooterRepository style={{marginTop: "0.55rem", marginBottom: "0.15rem"}}>
                             <h1 style={{ fontSize: "1.3rem", fontWeight: "bold",}}>Contact</h1>
-                        </Footer_Repository>
-                    </Footer_Resume_Wrapper>
-                    <Footer_Resume_Wrapper>
-                        <Footer_About_Container>
-                            <Footer_About_Wrapper>
-                                <Footer_About_List>
-                                    <Footer_About>
+                        </FooterRepository>
+                    </FooterResumeWrapper>
+                    <FooterResumeWrapper>
+                        <FooterAboutContainer>
+                            <FooterAboutWrapper>
+                                <FooterAboutList>
+                                    <FooterAbout>
                                         <a href="mailto:m0924vie@gmail.com">👉 이메일(Email)</a>
-                                    </Footer_About>
-                                    <Footer_About>
+                                    </FooterAbout>
+                                    <FooterAbout>
                                         <a href="https://zeroangry.notion.site/c71027bbf6284cb683e154ca83b1bf7a">👉 이력서(Resume)</a>
-                                    </Footer_About>
-                                    <Footer_About>
+                                    </FooterAbout>
+                                    <FooterAbout>
                                         <a href="https://www.notion.so/zeroangry/449dbc1b886c47f695eae0d32dd026ae">👉 포트폴리오(Portfolio)</a>
-                                    </Footer_About>
+                                    </FooterAbout>
                                     <div style={{margin: "10px",}}></div>
-                                </Footer_About_List>
-                            </Footer_About_Wrapper>
-                        </Footer_About_Container>
-                    </Footer_Resume_Wrapper>
-                    <Footer_Resume_Wrapper>
-                        <Footer_Repository style={{marginTop: "0.55rem", marginBottom: "0.15rem"}}>
+                                </FooterAboutList>
+                            </FooterAboutWrapper>
+                        </FooterAboutContainer>
+                    </FooterResumeWrapper>
+                    <FooterResumeWrapper>
+                        <FooterRepository style={{marginTop: "0.55rem", marginBottom: "0.15rem"}}>
                             <h1 style={{ fontSize: "1.3rem", fontWeight: "bold",}}>Channel</h1>
-                        </Footer_Repository>
-                    </Footer_Resume_Wrapper>
-                    <Footer_Resume_Wrapper>
-                        <Footer_About_Container>
-                            <Footer_About_Wrapper>
-                                <Footer_About_List>
-                                    <Footer_About>
+                        </FooterRepository>
+                    </FooterResumeWrapper>
+                    <FooterResumeWrapper>
+                        <FooterAboutContainer>
+                            <FooterAboutWrapper>
+                                <FooterAboutList>
+                                    <FooterAbout>
                                         <a href="https://nollae.github.io/">👉 Blog</a>
-                                    </Footer_About>
-                                    <Footer_About>
+                                    </FooterAbout>
+                                    <FooterAbout>
                                         <a href="https://github.com/nollae">👉 Github</a>
-                                    </Footer_About>
+                                    </FooterAbout>
                                     <div style={{margin: "10px",}}></div>
-                                </Footer_About_List>
-                            </Footer_About_Wrapper>
-                        </Footer_About_Container>
-                    </Footer_Resume_Wrapper>
-                </Footer_Container>
-            </Footer_Wrapper>
-        </Footer_>
+                                </FooterAboutList>
+                            </FooterAboutWrapper>
+                        </FooterAboutContainer>
+                    </FooterResumeWrapper>
+                </FooterContainer>
+            </FooterWrapper>
+        </FooterMain>
     );
 }
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 import { useForm } from 'react-hook-form';
 
-import {ReactComponent as MemberShip_SVG} from '../assets/member-ship.svg';
+import {ReactComponent as MemberShipSVG} from '../assets/member-ship.svg';
 import { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { loginState } from '../atoms';
 import { useRecoilState } from 'recoil';
 
-const Main_Cotainer = styled.div`
+const MainCotainer = styled.div`
     min-height: 32rem;
     padding: 8.5rem 0 3rem;
     display: flex;
@@ -23,7 +23,7 @@ const Main_Cotainer = styled.div`
     box-sizing: border-box;           
 `;
 
-const Main_Bg_Wrapper = styled.div`
+const MainBgWrapper = styled.div`
     height: 100%;
     left: 0;
     position: absolute;
@@ -31,7 +31,7 @@ const Main_Bg_Wrapper = styled.div`
     width: 100%;
 `;
 
-const Main_Bg_Container = styled.div`
+const MainBgContainer = styled.div`
     position: relative;
     overflow: hidden;
     height: 100%;
@@ -45,7 +45,7 @@ const Main_Bg_Container = styled.div`
     }
 `;
 
-const Main_Bg_Cover = styled.div`
+const MainBgCover = styled.div`
     background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%) !important;
     background: rgb(0 0 0 / 40%);
     position: absolute;
@@ -55,7 +55,7 @@ const Main_Bg_Cover = styled.div`
     left: 0;
 `;
 
-const Main_Content_Container = styled.div`
+const MainContentContainer = styled.div`
     max-width: calc(100% - 4rem);
     margin: auto;
     display: flex;
@@ -65,32 +65,32 @@ const Main_Content_Container = styled.div`
     text-align: center;
 `;
 
-const Main_Content_Detail_Container = styled.div`
+const MainContentDetailContainer = styled.div`
     flex-basis: 50%;
     padding: 0;
     z-index: 1;
     width: 100%;
 `;
 
-const Main_Content_Border = styled.div`
+const MainContentBorder = styled.div`
     flex-basis: 50%;
     padding: 0;
     z-index: 1;
 `;
 
-const Main_Content_Title = styled.h1`
+const MainContentTitle = styled.h1`
     margin: 0;
     font-size: 2rem;
     font-weight: 700;
 `;
 
-const Main_Content_SubTitle = styled.p`
+const MainContentSubTitle = styled.p`
     margin: 1rem 0 0;
     font-size: 1.125rem;
     font-weight: 400;
 `;
 
-const MemberShip_Container = styled.div`
+const MemberShipContainer = styled.div`
     display: flex;
     position: relative;
     -webkit-box-pack: center;
@@ -103,25 +103,25 @@ const MemberShip_Container = styled.div`
     padding: 32px;
 `;
 
-const MemberShip_Info_Container = styled.div`
+const MemberShipInfoContainer = styled.div`
     padding-left: 32px;
 `;
 
-const MemberShip_Info_Text_01 = styled.p`
+const MemberShipInfoText01 = styled.p`
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
     margin: 0;
 `;
 
-const MemberShip_Info_Text_02 = styled.p`
+const MemberShipInfoText02 = styled.p`
     font-size: 16px;
     line-height: 24px;
     margin-top: 4px;
     margin-bottom: 8px;
 `;
 
-const MemberShip_Info_Button = styled.button`
+const MemberShipInfoButton = styled.button`
     cursor: pointer;
     color: #448ef4;
     display: flex;
@@ -137,7 +137,7 @@ const MemberShip_Info_Button = styled.button`
 `;
 
 // Section 
-const Section_Container = styled.div`
+const SectionContainer = styled.div`
     min-height: auto;
     padding: 4.5rem 0;
     position: relative;
@@ -150,7 +150,7 @@ const Section_Container = styled.div`
     box-sizing: border-box;
 `;
 
-const Section_Div_Container = styled.div<{$isReverse?:boolean, $isColumn?:boolean}>`
+const SectionDivContainer = styled.div<{$isReverse?:boolean, $isColumn?:boolean}>`
     flex-direction: ${(props) => props.$isColumn ? "column" : ( props.$isReverse ? "row-reverse" : "row" ) };
     max-width: calc(100% - 4rem);
     margin: auto;
@@ -162,7 +162,7 @@ const Section_Div_Container = styled.div<{$isReverse?:boolean, $isColumn?:boolea
     text-align: center;
 `;
 
-const Section_Devider = styled.div`
+const SectionDevider = styled.div`
     width: 100%;
     height: 0.5rem;
     position: absolute;
@@ -170,7 +170,7 @@ const Section_Devider = styled.div`
     background-color: rgb(35, 35, 35);
 `;
 
-const Section_Content_Container = styled.div`
+const SectionContentContainer = styled.div`
     text-align: left;
     padding-right: 0.375rem;
     flex-basis: 50%;
@@ -179,19 +179,19 @@ const Section_Content_Container = styled.div`
     width: 100%;
 `;
 
-const Section_Content_Title = styled.h2`
+const SectionContentTitle = styled.h2`
     margin: 0;
     font-size: 3rem;
     font-weight: 900;
 `;
 
-const Section_Content_Text = styled.p`
+const SectionContentText = styled.p`
     margin: 1rem 0 0;
     font-size: 1.5rem;
     font-weight: 400;
 `;
 
-const Section_Content_Devider = styled.div`
+const SectionContentDevider = styled.div`
     margin: 1.5rem 0 0;
     
     div {
@@ -201,7 +201,7 @@ const Section_Content_Devider = styled.div`
     }
 `;
 
-const Section_Video_Container = styled.div`
+const SectionVideoContainer = styled.div`
     padding-left: 0.375rem;
     flex-basis: 50%;
     padding: 0;
@@ -215,7 +215,7 @@ const Section_Video_Container = styled.div`
     }
 `;
 
-const Section_Video_Div_Container = styled.div<{$topValue:number}>`
+const SectionVideoDivContainer = styled.div<{$topValue:number}>`
     z-index: -1;
     overflow: hidden;
     width: 100%;
@@ -233,7 +233,7 @@ const Section_Video_Div_Container = styled.div<{$topValue:number}>`
     }
 `;
 
-const Section_Motion_Container = styled.div`
+const SectionMotionContainer = styled.div`
     padding: 0.5rem 0.75rem;
     overflow: hidden;
     position: absolute !important;
@@ -252,7 +252,7 @@ const Section_Motion_Container = styled.div`
     z-index: 1;
 `;
 
-const Section_Motion_Image_Wrapper = styled.div`
+const SectionMotionImageWrapper = styled.div`
     margin: 0 1rem 0 0;
     -webkit-box-flex: 0;
     flex-grow: 0;
@@ -262,7 +262,7 @@ const Section_Motion_Image_Wrapper = styled.div`
     }
 `;
 
-const Section_Motion_Content_Wrapper = styled.div`
+const SectionMotionContentWrapper = styled.div`
     text-align: left;
     -webkit-box-flex: 1;
     flex-grow: 1;
@@ -283,7 +283,7 @@ const Section_Motion_Content_Wrapper = styled.div`
     }
 `;
 
-const Section_Motion_Gif = styled.div`
+const SectionMotionGif = styled.div`
     height: 3.75rem;
     width: 3rem;
     outline: 2px solid rgb(0, 0, 0);
@@ -297,21 +297,21 @@ const Section_Motion_Gif = styled.div`
     flex-shrink: 0;
 `;
 
-const Section_List_Container = styled.div`
+const SectionListContainer = styled.div`
     flex-basis: 50%;
     padding: 0;
     z-index: 1;
     width: 100%;
 `
 
-const Section_List_Div = styled.div`
+const SectionListDiv = styled.div`
     padding-right: 0.375rem;
     flex-basis: 50%;
     padding: 0;
     z-index: 1;
 `;
 
-const Section_List_Detail_Container = styled.div`
+const SectionListDetailContainer = styled.div`
     margin: 1.5rem 0 0;
     ul {
         list-style: none;
@@ -328,7 +328,7 @@ const Section_List_Detail_Container = styled.div`
     }
 `;
 
-const Section_List_Detail_Title= styled(motion.h3)`
+const SectionListDetailTitle= styled(motion.h3)`
     margin: 0;
     display: flex;
     font-size: inherit;
@@ -381,7 +381,7 @@ const Section_List_Detail_Title= styled(motion.h3)`
     }
 `;
 
-const Section_List_Detail_Content = styled(motion.div)<{$isOpen?:boolean}>`
+const SectionListDetailContent = styled(motion.div)<{$isOpen?:boolean}>`
     overflow: hidden;
     visibility: ${(props) => props.$isOpen ? "visible" : "collapse"};
     max-height:${(props) => props.$isOpen ? "75rem" : "0" }; 
@@ -399,7 +399,7 @@ const Section_List_Detail_Content = styled(motion.div)<{$isOpen?:boolean}>`
     }
 `;
 
-const Section_List_Detail_Button_Svg = styled.svg<{$isOpen:boolean}>`
+const SectionListDetailButtonSvg = styled.svg<{$isOpen:boolean}>`
     svg:not(:root) {
         overflow: hidden;
     }
@@ -407,7 +407,7 @@ const Section_List_Detail_Button_Svg = styled.svg<{$isOpen:boolean}>`
     transform: ${(props) => props.$isOpen ? "rotate(-45deg)" : "rotate(0)" };
 `;
 
-const Email_Platform_Container = styled.div`
+const EmailPlatformContainer = styled.div`
     content: '2';
     padding: 0 2rem;
     text-align: center;
@@ -426,7 +426,7 @@ const Email_Platform_Container = styled.div`
     }
 `;
 
-const Email_Form_Container = styled.div`
+const EmailFormContainer = styled.div`
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
@@ -438,7 +438,7 @@ const Email_Form_Container = styled.div`
     /* -webkit-box-align: center; */
 `;
 
-const Email_Input_Container = styled.div`
+const EmailInputContainer = styled.div`
     width: auto;
     flex: 1 1 auto;
     position: relative;
@@ -447,7 +447,7 @@ const Email_Input_Container = styled.div`
     vertical-align: text-top;
 `;
 
-const Email_Input_Common_Label = styled.label`
+const EmailInputCommonLabel = styled.label`
     font-weight: 400;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.7);
@@ -464,19 +464,19 @@ const Email_Input_Common_Label = styled.label`
     display: block; 
 `;
 
-const Email_Input_Label_Tp = styled(Email_Input_Common_Label)<{$isEmailFocus?:boolean}>`
+const EmailInputLabelTp = styled(EmailInputCommonLabel)<{$isEmailFocus?:boolean}>`
     font-size: ${(props) => props.$isEmailFocus ? "0.75rem" : "1rem"};
     transition-timing-function: ${(props) => props.$isEmailFocus ? "cubic-bezier(0.5, 0, 0.1, 1)" : "cubic-bezier(0.9, 0, 0.51, 1)"};
     top: ${(props) => props.$isEmailFocus ? "0.5rem" : "1rem"};
 `;
 
-// const Email_Input_Label_Bt = styled(Email_Input_Common_Label)<{$isEmailFocus?:boolean}>`
+// const EmailInputLabelBt = styled(EmailInputCommonLabel)<{$isEmailFocus?:boolean}>`
 //     font-size: ${(props) => props.$isEmailFocus ? "0.75rem" : "1rem"};
 //     transition-timing-function: ${(props) => props.$isEmailFocus ? "cubic-bezier(0.5, 0, 0.1, 1)" : "cubic-bezier(0.9, 0, 0.51, 1)"};
 //     top: ${(props) => props.$isEmailFocus ? "0.5rem" : "1rem"};
 // `;
 
-const Email_Input_Container_Div = styled.div`
+const EmailInputContainerDiv = styled.div`
     font-size: 1rem;
     font-weight: 400;
     color: rgb(255, 255, 255);
@@ -495,7 +495,7 @@ const Email_Input_Container_Div = styled.div`
     z-index: 0;
 `;
 
-const Email_Common_Input = styled.input`
+const EmailCommonInput = styled.input`
     &:focus-visible {
         outline: 0;
     }
@@ -519,17 +519,17 @@ const Email_Common_Input = styled.input`
     text-transform: inherit;
 `;
 
-const Email_Input_Tp = styled(Email_Common_Input)<{$isEmailFocus?:boolean,}>`
+const EmailInputTp = styled(EmailCommonInput)<{$isEmailFocus?:boolean,}>`
     filter: opacity(${(props) => props.$isEmailFocus ? 100 : 0}%);
     /* outline: ${(props) => props.$isEmailFocus ? undefined : 0}; */
 `;
 
-// const Email_Input_Bt = styled(Email_Common_Input)<{$isEmailFocus?:boolean,}>`
+// const EmailInputBt = styled(EmailCommonInput)<{$isEmailFocus?:boolean,}>`
 //     filter: opacity(${(props) => props.$isEmailFocus ? 100 : 0}%);
 //     /* outline: ${(props) => props.$isEmailFocus ? undefined : 0}; */
 // `;
 
-const Email_Input_Border_Common = styled.div`
+const EmailInputBorderCommon = styled.div`
     background: rgba(22, 22, 22, 0.7);
     border-width: 1px;
     border-style: solid;
@@ -550,19 +550,19 @@ const Email_Input_Border_Common = styled.div`
     user-select: none;
 `;
 
-const Email_Input_Border_Tp = styled(Email_Input_Border_Common)<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
+const EmailInputBorderTp = styled(EmailInputBorderCommon)<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
     outline: ${(props) => props.$isFocus ? "rgb(255, 255, 255) solid 0.125rem" : "none"};
     outline-offset: ${(props) => props.$isFocus ? "0.125rem" : "none"};
     border-color: ${(props) => props.$isEmailError ? "rgb(235, 57, 66)" : (props.$isValid) ? "rgb(43, 184, 113)" : "rgba(128, 128, 128, 0.7)"} ;
 `;
 
-const Email_Input_Border_Bt = styled(Email_Input_Border_Common)<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
-    outline: ${(props) => props.$isFocus ? "rgb(255, 255, 255) solid 0.125rem" : "none"};
-    outline-offset: ${(props) => props.$isFocus ? "0.125rem" : "none"};
-    border-color: ${(props) => props.$isEmailError ? "rgb(235, 57, 66)" : (props.$isValid) ? "rgb(43, 184, 113)" : "rgba(128, 128, 128, 0.7)"} ;
-`;
+// const EmailInputBorderBt = styled(EmailInputBorderCommon)<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
+//     outline: ${(props) => props.$isFocus ? "rgb(255, 255, 255) solid 0.125rem" : "none"};
+//     outline-offset: ${(props) => props.$isFocus ? "0.125rem" : "none"};
+//     border-color: ${(props) => props.$isEmailError ? "rgb(235, 57, 66)" : (props.$isValid) ? "rgb(43, 184, 113)" : "rgba(128, 128, 128, 0.7)"} ;
+// `;
 
-const Email_Error_Container_Common = styled.div`
+const EmailErrorContainerCommon = styled.div`
     font-size: 0.8125rem;
     font-weight: 400;
     line-height: 1.53846;
@@ -577,18 +577,18 @@ const Email_Error_Container_Common = styled.div`
     }
 `;
 
-const Email_Error_Container_Tp = styled(Email_Error_Container_Common)<{$isEmailError:boolean}>`
+const EmailErrorContainerTp = styled(EmailErrorContainerCommon)<{$isEmailError:boolean}>`
     svg {
         display: ${(props) => props.$isEmailError ? "" : "none" };
     }
 `;
-const Email_Error_Container_Bt = styled(Email_Error_Container_Common)<{$isEmailError:boolean}>`
-    svg {
-        display: ${(props) => props.$isEmailError ? "" : "none" };
-    }
-`;
+// const EmailErrorContainerBt = styled(EmailErrorContainerCommon)<{$isEmailError:boolean}>`
+//     svg {
+//         display: ${(props) => props.$isEmailError ? "" : "none" };
+//     }
+// `;
 
-const Email_Button_Container = styled.button`
+const EmailButtonContainer = styled.button`
     flex: 0 0 auto;
     margin-top: 0 !important;
     margin-left: 0.5rem !important;
@@ -659,7 +659,7 @@ const Email_Button_Container = styled.button`
     }
 `;
 
-const Email_Button_Svg_Container = styled.div`
+const EmailButtonSvgContainer = styled.div`
     display: inline-block;
     height: 1.5rem;
     svg{
@@ -681,7 +681,7 @@ function Main() {
     const history = useHistory();
 
     // useForm hook
-    const { register, watch, handleSubmit, formState:{errors, isValid, isValidating}, getValues, setValue, trigger, setFocus} = useForm<IForm>();
+    const { register, handleSubmit, formState:{errors, isValid}, getValues, setValue, trigger, setFocus} = useForm<IForm>();
     const [login, setLogin] = useRecoilState(loginState);
 
     const onValidTp = (data:IForm) => {
@@ -713,7 +713,7 @@ function Main() {
             trigger();
             setFocus("emailTp");
         }
-    }, []);
+    }, [login.email, setFocus, setValue, trigger]);
 
     
 
@@ -732,23 +732,23 @@ function Main() {
     const [activeIndex, setActiveIndex] = useState<number>();
     const handleAccodian = (idx:number) => {
         
-        if(activeIndex == idx){
+        if(activeIndex === idx){
             setActiveIndex(undefined);
         }else{
             setActiveIndex(idx);
         }
     }
 
-    const onValidBt = (data:IForm) => {
-    }
+    // const onValidBt = (data:IForm) => {
+    // }
 
     // 하단 이메일 
-    const [isFocusBt, setIsFocusBt] = useState(false);
-    const [isEmailBtFocus, setIsEmailBtFocus] = useState(false);
-    const handleEmailBtFocus = () => {
-        setIsEmailBtFocus(true);
-        setIsFocusBt(true);
-    }
+    // const [isFocusBt, setIsFocusBt] = useState(false);
+    // const [isEmailBtFocus, setIsEmailBtFocus] = useState(false);
+    // const handleEmailBtFocus = () => {
+    //     setIsEmailBtFocus(true);
+    //     setIsFocusBt(true);
+    // }
 
     // const handleEmailBtBlur = () => {
     //     if(emailBt.length <= 0) setIsEmailBtFocus(false);
@@ -763,36 +763,36 @@ function Main() {
     return (
         <div>
             {/* 이미지 배경 && 이메일 주소 입력 */}
-            <Main_Cotainer>
-                <Main_Bg_Wrapper>
-                    <Main_Bg_Container>
+            <MainCotainer>
+                <MainBgWrapper>
+                    <MainBgContainer>
                         <img alt="" aria-hidden="true" src="https://assets.nflxext.com/ffe/siteui/vlv3/d253acf4-a1e2-4462-a416-f78802dc2d85/df3e63de-ea64-4e5e-b42a-370630b4c8ee/KR-ko-20240429-POP_SIGNUP_TWO_WEEKS-perspective_WEB_e969cb3e-6c59-41db-82f3-8f4aa5209d72_small.jpg" />
-                        <Main_Bg_Cover />
-                    </Main_Bg_Container>
-                </Main_Bg_Wrapper>
-                <Main_Content_Container>
-                    <Main_Content_Detail_Container>
-                        <Main_Content_Title>
+                        <MainBgCover />
+                    </MainBgContainer>
+                </MainBgWrapper>
+                <MainContentContainer>
+                    <MainContentDetailContainer>
+                        <MainContentTitle>
                             영화, 시리즈 등을 무제한으로
-                        </Main_Content_Title>
-                        <Main_Content_SubTitle>
+                        </MainContentTitle>
+                        <MainContentSubTitle>
                             어디서나 자유롭게 시청하세요. 해지는 언제든 가능합니다.
-                        </Main_Content_SubTitle>
+                        </MainContentSubTitle>
 
                         <div style={{margin: "1.5rem 0 0",}}>
-                            <Email_Platform_Container>
+                            <EmailPlatformContainer>
                                 <form onSubmit={handleSubmit(onValidTp)}>
                                     <h3>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</h3>
-                                    <Email_Form_Container>
-                                        <Email_Input_Container>
-                                            <Email_Input_Label_Tp 
+                                    <EmailFormContainer>
+                                        <EmailInputContainer>
+                                            <EmailInputLabelTp 
                                                 $isEmailFocus={isEmailTpFocus}
-                                                htmlFor="email_top">
+                                                htmlFor="emailtop">
                                                 이메일 주소
-                                            </Email_Input_Label_Tp>
-                                            <Email_Input_Container_Div>
-                                                <Email_Input_Tp 
-                                                    id="email_top"
+                                            </EmailInputLabelTp>
+                                            <EmailInputContainerDiv>
+                                                <EmailInputTp 
+                                                    id="emailtop"
                                                     $isEmailFocus={isEmailTpFocus}
                                                     onFocus={handleEmailTpFocus}
                                                     {...register("emailTp", { 
@@ -814,13 +814,13 @@ function Main() {
                                                         },
                                                     })}
                                                 />
-                                                <Email_Input_Border_Tp 
+                                                <EmailInputBorderTp 
                                                     $isFocus={isFocusTp} 
                                                     $isEmailError={(errors?.emailTp?.message) ? true : false} 
                                                     $isValid={isValid} 
                                                 />
-                                            </Email_Input_Container_Div>
-                                            <Email_Error_Container_Tp 
+                                            </EmailInputContainerDiv>
+                                            <EmailErrorContainerTp 
                                                 $isEmailError={(errors?.emailTp?.message) ? true : false}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
@@ -828,10 +828,10 @@ function Main() {
                                                     </path>
                                                 </svg>
                                                 {errors?.emailTp?.message}
-                                            </Email_Error_Container_Tp>
+                                            </EmailErrorContainerTp>
 
-                                        </Email_Input_Container>
-                                            <Email_Button_Container>
+                                        </EmailInputContainer>
+                                            <EmailButtonContainer>
                                                 {
                                                     login.email && login.password 
                                                     ?
@@ -839,129 +839,129 @@ function Main() {
                                                     :
                                                     `시작하기`
                                                 }
-                                                <Email_Button_Svg_Container>
+                                                <EmailButtonSvgContainer>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="ChevronRightStandard" aria-hidden="true">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M15.5859 12L8.29303 19.2928L9.70725 20.7071L17.7072 12.7071C17.8948 12.5195 18.0001 12.2652 18.0001 12C18.0001 11.7347 17.8948 11.4804 17.7072 11.2928L9.70724 3.29285L8.29303 4.70706L15.5859 12Z" fill="currentColor">
                                                         </path>
                                                     </svg>
-                                                </Email_Button_Svg_Container>
-                                            </Email_Button_Container>
-                                    </Email_Form_Container>
+                                                </EmailButtonSvgContainer>
+                                            </EmailButtonContainer>
+                                    </EmailFormContainer>
                                 </form>
-                            </Email_Platform_Container>
+                            </EmailPlatformContainer>
                         </div>  
 
-                    </Main_Content_Detail_Container>
-                    <Main_Content_Border />
-                </Main_Content_Container>
-            </Main_Cotainer>
+                    </MainContentDetailContainer>
+                    <MainContentBorder />
+                </MainContentContainer>
+            </MainCotainer>
 
             {/* 멤버십 */}
             <div>
-                <MemberShip_Container>
+                <MemberShipContainer>
                     <div>
-                        <MemberShip_SVG />
+                        <MemberShipSVG />
                     </div>
-                    <MemberShip_Info_Container>
-                        <MemberShip_Info_Text_01>
+                    <MemberShipInfoContainer>
+                        <MemberShipInfoText01>
                             5,500원이면 만날 수 있는 넷플릭스.
-                        </MemberShip_Info_Text_01>
-                        <MemberShip_Info_Text_02>
+                        </MemberShipInfoText01>
+                        <MemberShipInfoText02>
                             광고형 스탠다드 멤버십에 가입하세요.
-                        </MemberShip_Info_Text_02>
-                        <MemberShip_Info_Button>
+                        </MemberShipInfoText02>
+                        <MemberShipInfoButton>
                             자세히 알아보기
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" aria-hidden="true">
                                 <path fillRule="evenodd" clipRule="evenodd" 
                                     d="M15.5859 12L8.29303 19.2928L9.70725 20.7071L17.7072 12.7071C17.8948 12.5195 18.0001 12.2652 18.0001 12C18.0001 11.7347 17.8948 11.4804 17.7072 11.2928L9.70724 3.29285L8.29303 4.70706L15.5859 12Z" fill="currentColor">
                                 </path>
                             </svg>
-                        </MemberShip_Info_Button>
-                    </MemberShip_Info_Container>
-                </MemberShip_Container>
+                        </MemberShipInfoButton>
+                    </MemberShipInfoContainer>
+                </MemberShipContainer>
             </div>
 
             {/* TV로 즐기세요 */}
-            <Section_Container>
-                <Section_Div_Container $isReverse={false}>
-                    <Section_Content_Container>
-                        <Section_Content_Title>
+            <SectionContainer>
+                <SectionDivContainer $isReverse={false}>
+                    <SectionContentContainer>
+                        <SectionContentTitle>
                             TV로 즐기세요
-                        </Section_Content_Title>
-                        <Section_Content_Text>
+                        </SectionContentTitle>
+                        <SectionContentText>
                             스마트 TV, PlayStation, Xbox, Chromecast, Apple TV, 블루레이 플레이어 등 다양한 디바이스에서 시청하세요.
-                        </Section_Content_Text>
-                        <Section_Content_Devider>
+                        </SectionContentText>
+                        <SectionContentDevider>
                             <div></div>
-                        </Section_Content_Devider>
-                    </Section_Content_Container>
+                        </SectionContentDevider>
+                    </SectionContentContainer>
 
-                    <Section_Video_Container>
+                    <SectionVideoContainer>
                         <div>
                             <img alt="" 
                                 src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/tv.png" />
-                            <Section_Video_Div_Container $topValue={46}>
+                            <SectionVideoDivContainer $topValue={46}>
                                 <video autoPlay={true} playsInline={true} muted={true} loop={true}>
                                     <source src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v" type="video/mp4" />
                                 </video>
                                 <div></div>
                                 <div></div>
-                            </Section_Video_Div_Container>
+                            </SectionVideoDivContainer>
                         </div>
-                    </Section_Video_Container>
-                </Section_Div_Container>
-                <Section_Devider />
-            </Section_Container>
+                    </SectionVideoContainer>
+                </SectionDivContainer>
+                <SectionDevider />
+            </SectionContainer>
             
             {/* 어디서나 자유롭게 시청하세요 */}
-            <Section_Container>
-                <Section_Div_Container $isReverse={true}>
-                    <Section_Content_Container>
-                        <Section_Content_Title>
+            <SectionContainer>
+                <SectionDivContainer $isReverse={true}>
+                    <SectionContentContainer>
+                        <SectionContentTitle>
                             어디서나 자유롭게 시청하세요
-                        </Section_Content_Title>
-                        <Section_Content_Text>
+                        </SectionContentTitle>
+                        <SectionContentText>
                             각종 영화와 시리즈를 스마트폰, 태블릿, 노트북, TV에서 무제한으로 스트리밍하세요.
-                        </Section_Content_Text>
-                        <Section_Content_Devider>
+                        </SectionContentText>
+                        <SectionContentDevider>
                             <div></div>
-                        </Section_Content_Devider>
-                    </Section_Content_Container>
+                        </SectionContentDevider>
+                    </SectionContentContainer>
 
-                    <Section_Video_Container>
+                    <SectionVideoContainer>
                         <div>
                             <img alt="" 
                                 src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/device-pile.png" />
-                            <Section_Video_Div_Container $topValue={34}>
+                            <SectionVideoDivContainer $topValue={34}>
                                 <video autoPlay={true} playsInline={true} muted={true} loop={true}>
                                     <source src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices.m4v" type="video/mp4" />
                                 </video>
                                 <div></div>
                                 <div></div>
-                            </Section_Video_Div_Container>
+                            </SectionVideoDivContainer>
                         </div>
-                    </Section_Video_Container>
+                    </SectionVideoContainer>
 
-                </Section_Div_Container>
-                <Section_Devider />
-            </Section_Container>
+                </SectionDivContainer>
+                <SectionDevider />
+            </SectionContainer>
 
             {/* 어린이 전용 프로필을 만들어보세요 */}
-            <Section_Container>
-                <Section_Div_Container $isReverse={false}>
-                    <Section_Content_Container>
-                        <Section_Content_Title>
+            <SectionContainer>
+                <SectionDivContainer $isReverse={false}>
+                    <SectionContentContainer>
+                        <SectionContentTitle>
                             어린이 전용 프로필을 만들어 보세요
-                        </Section_Content_Title>   
-                        <Section_Content_Text>
+                        </SectionContentTitle>   
+                        <SectionContentText>
                             자기만의 공간에서 좋아하는 캐릭터와 즐기는 신나는 모험. 자녀에게 이 특별한 경험을 선물하세요. 넷플릭스 회원이라면 무료입니다.
-                        </Section_Content_Text>     
-                        <Section_Content_Devider>
+                        </SectionContentText>     
+                        <SectionContentDevider>
                             <div></div>
-                        </Section_Content_Devider>           
-                    </Section_Content_Container>   
+                        </SectionContentDevider>           
+                    </SectionContentContainer>   
 
-                    <Section_Video_Container>
+                    <SectionVideoContainer>
                         <div>
                             <img alt="" 
                                 src="https://occ-0-3098-993.1.nflxso.net/dnm/api/v6/19OhWN2dO19C9txTON9tvTFtefw/AAAABdl4VeWgVycbbzJBV1KbIpMScxU_I4h6uTvNRpFab-65jsTTqI0V-g-4Jq4CLaIVqx-wbKAwA_Ee8KhZyTb0SFJ5tK2mifI-GYEB.png?r=15b" />
@@ -970,92 +970,92 @@ function Main() {
                                 <div></div>
                             </div>
                         </div>                  
-                    </Section_Video_Container>
+                    </SectionVideoContainer>
                                              
-                </Section_Div_Container>
-                <Section_Devider />
-            </Section_Container>   
+                </SectionDivContainer>
+                <SectionDevider />
+            </SectionContainer>   
             
             {/* 즐겨 보는 콘텐츠를 저장해 오프라인으로 시청하세요 */}
-            <Section_Container>
-                <Section_Div_Container $isReverse={true}>
-                    <Section_Content_Container>
-                        <Section_Content_Title>
+            <SectionContainer>
+                <SectionDivContainer $isReverse={true}>
+                    <SectionContentContainer>
+                        <SectionContentTitle>
                             즐겨 보는 콘텐츠를 저장해 오프라인으로 시청하세요
-                        </Section_Content_Title>
-                        <Section_Content_Text>
+                        </SectionContentTitle>
+                        <SectionContentText>
                             비행기, 기차, 잠수함. 어디서든 시청하세요.
-                        </Section_Content_Text>
-                        <Section_Content_Devider>
+                        </SectionContentText>
+                        <SectionContentDevider>
                             <div></div>
-                        </Section_Content_Devider>
-                    </Section_Content_Container>
+                        </SectionContentDevider>
+                    </SectionContentContainer>
 
-                    <Section_Video_Container>
+                    <SectionVideoContainer>
                         <div>
                             <img alt="" 
                                 src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/mobile-0819.jpg" />
-                            <Section_Motion_Container>
-                                <Section_Motion_Image_Wrapper>
+                            <SectionMotionContainer>
+                                <SectionMotionImageWrapper>
                                     <img alt="" 
                                         src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/boxshot.png" />
-                                </Section_Motion_Image_Wrapper>   
-                                <Section_Motion_Content_Wrapper>
+                                </SectionMotionImageWrapper>   
+                                <SectionMotionContentWrapper>
                                     <div>기묘한 이야기</div>
                                     <div>저장 중...</div>
-                                </Section_Motion_Content_Wrapper>    
-                                <Section_Motion_Gif />       
-                            </Section_Motion_Container>
+                                </SectionMotionContentWrapper>    
+                                <SectionMotionGif />       
+                            </SectionMotionContainer>
                         </div>
-                    </Section_Video_Container>
+                    </SectionVideoContainer>
 
-                </Section_Div_Container>
-                <Section_Devider />
-            </Section_Container>
+                </SectionDivContainer>
+                <SectionDevider />
+            </SectionContainer>
 
             {/* 자주 묻는 질문 */}
-            <Section_Container>
-                <Section_Div_Container $isColumn={true}>
-                    <Section_List_Container>
-                        <Section_Content_Title>
+            <SectionContainer>
+                <SectionDivContainer $isColumn={true}>
+                    <SectionListContainer>
+                        <SectionContentTitle>
                             자주 묻는 질문
-                        </Section_Content_Title>
-                        <Section_List_Detail_Container>
+                        </SectionContentTitle>
+                        <SectionListDetailContainer>
                             <ul>
                                 {QAList.map((item, idx) => (
                                     <li key={idx} className={(idx === activeIndex) ? 'active' : ''}>
-                                        <Section_List_Detail_Title onClick={() => handleAccodian(idx)}>
+                                        <SectionListDetailTitle onClick={() => handleAccodian(idx)}>
                                             <button > 
                                                 <span dangerouslySetInnerHTML={{__html: item.title}}></span>
-                                                <Section_List_Detail_Button_Svg 
+                                                <SectionListDetailButtonSvg 
                                                     $isOpen={(idx === activeIndex)}
                                                     xmlns="http://www.w3.org/2000/svg" fill="none" width="36" height="36" viewBox="0 0 36 36" role="img" data-icon="PlusLarge" aria-hidden="true" >
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M17 17V3H19V17H33V19H19V33H17V19H3V17H17Z" fill="currentColor"></path>
-                                                </Section_List_Detail_Button_Svg>
+                                                </SectionListDetailButtonSvg>
                                             </button>
-                                        </Section_List_Detail_Title>
-                                        <Section_List_Detail_Content $isOpen={(idx === activeIndex)}>
+                                        </SectionListDetailTitle>
+                                        <SectionListDetailContent $isOpen={(idx === activeIndex)}>
                                             <span dangerouslySetInnerHTML={{__html: item.content}}>
                                             </span>
-                                        </Section_List_Detail_Content>
+                                        </SectionListDetailContent>
                                     </li>
                                 ))}
                             </ul>
                             {/* 이메일 */}
                             {/* <div style={{marginTop: "2.85rem",}}>
-                                <Email_Platform_Container>
+                                <EmailPlatformContainer>
                                     <form onSubmit={handleSubmit(onValidBt)}>
                                         <h3>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</h3>
-                                        <Email_Form_Container>
-                                            <Email_Input_Container>
-                                                <Email_Input_Label_Bt
+                                        <EmailFormContainer>
+                                            <EmailInputContainer>
+                                                <EmailInputLabelBt
                                                     $isEmailFocus={isEmailBtFocus}
-                                                    htmlFor="email_bttm">
+                                                    htmlFor="emailbttm">
                                                     이메일 주소
-                                                </Email_Input_Label_Bt>
-                                                <Email_Input_Container_Div>
-                                                    <Email_Input_Bt 
-                                                        id="email_bttm"
+                                                </EmailInputLabelBt>
+                                                <EmailInputContainerDiv>
+                                                    <EmailInputBt 
+                                                        id="emailbttm"
                                                         $isEmailFocus={isEmailBtFocus}
                                                         onFocus={handleEmailBtFocus}
                                                         {...register("emailBt", { 
@@ -1079,36 +1079,36 @@ function Main() {
                                                             // }
                                                         })}
                                                     />
-                                                    <Email_Input_Border_Bt $isFocus={isFocusBt} $isEmailError={(errors?.emailBt?.message) ? true : false} $isValid={isValid} />
-                                                </Email_Input_Container_Div>
-                                                <Email_Error_Container_Bt $isEmailError={(errors?.emailBt?.message) ? true : false}>
+                                                    <EmailInputBorderBt $isFocus={isFocusBt} $isEmailError={(errors?.emailBt?.message) ? true : false} $isValid={isValid} />
+                                                </EmailInputContainerDiv>
+                                                <EmailErrorContainerBt $isEmailError={(errors?.emailBt?.message) ? true : false}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="currentColor">
                                                         </path>
                                                     </svg>
                                                     {errors?.emailBt?.message}
-                                                </Email_Error_Container_Bt>
+                                                </EmailErrorContainerBt>
 
-                                            </Email_Input_Container>
-                                            <Email_Button_Container>
+                                            </EmailInputContainer>
+                                            <EmailButtonContainer>
                                                 시작하기
-                                                <Email_Button_Svg_Container>
+                                                <EmailButtonSvgContainer>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="ChevronRightStandard" aria-hidden="true">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M15.5859 12L8.29303 19.2928L9.70725 20.7071L17.7072 12.7071C17.8948 12.5195 18.0001 12.2652 18.0001 12C18.0001 11.7347 17.8948 11.4804 17.7072 11.2928L9.70724 3.29285L8.29303 4.70706L15.5859 12Z" fill="currentColor">
                                                         </path>
                                                     </svg>
-                                                </Email_Button_Svg_Container>
-                                            </Email_Button_Container>
-                                        </Email_Form_Container>
+                                                </EmailButtonSvgContainer>
+                                            </EmailButtonContainer>
+                                        </EmailFormContainer>
                                     </form>
-                                </Email_Platform_Container>
+                                </EmailPlatformContainer>
                             </div>                */}
-                        </Section_List_Detail_Container>
-                    </Section_List_Container>    
-                    <Section_List_Div />                        
-                </Section_Div_Container>     
-                <Section_Devider />                        
-            </Section_Container>
+                        </SectionListDetailContainer>
+                    </SectionListContainer>    
+                    <SectionListDiv />                        
+                </SectionDivContainer>     
+                <SectionDevider />                        
+            </SectionContainer>
 
 
 

@@ -1,10 +1,10 @@
 
 import styled from 'styled-components';
 
-import { Link, useHistory, useRouteMatch } from 'react-router-dom'; 
+import { useHistory } from 'react-router-dom'; 
 import { useState, useEffect } from 'react';
 
-import { motion, useAnimation, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion"; 
+import { motion, AnimatePresence } from "framer-motion"; 
 
 import { IGetMoviesResult, getSeries, 
 } from '../api';
@@ -22,9 +22,9 @@ import { addFavoriteVideo,
     addFavoriteVideoInfo, removeFavoriteVideoInfo
 } from '../atoms';
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
-const Body_Container = styled.div<{$isOpen?:boolean}>`
+const BodyContainer = styled.div<{$isOpen?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -40,7 +40,7 @@ const Body_Container = styled.div<{$isOpen?:boolean}>`
     overflow: ${(props) => props.$isOpen ? "hidden" : "visible"};    
 `;
 
-const MainView_Wrapper = styled.div`
+const MainViewWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -55,7 +55,7 @@ const MainView_Wrapper = styled.div`
     z-index: 0;    
 `;
 
-const MainView_Container = styled.div`
+const MainViewContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -71,7 +71,7 @@ const MainView_Container = styled.div`
     margin-top: -70px;    
 `;
 
-const Slide_Container = styled.div`
+const SlideContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -90,7 +90,7 @@ const Slide_Container = styled.div`
     padding: 0;    
 `;
 
-const Slide_Content_Wrapper = styled.div`
+const SlideContentWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -106,7 +106,7 @@ const Slide_Content_Wrapper = styled.div`
     /* height: 7.7rem; */
 `;
 
-const Slide_Layer_Wrapper = styled.div`
+const SlideLayerWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -121,7 +121,7 @@ const Slide_Layer_Wrapper = styled.div`
     /* height: 7.7rem; */
 `;
 
-const Slide_Content_Container = styled.div`
+const SlideContentContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -139,7 +139,7 @@ const Slide_Content_Container = styled.div`
     height: 7.7rem;
 `;
 
-const Slider_Wrapper = styled(motion.div)`
+const SliderWrapper = styled(motion.div)`
     position: relative;
     width: 100%;
 
@@ -156,7 +156,7 @@ const Slider_Wrapper = styled(motion.div)`
     overflow-x: visible;
 `;
 
-const Slider_Container = styled(motion.div)`
+const SliderContainer = styled(motion.div)`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -173,7 +173,7 @@ const Slider_Container = styled(motion.div)`
     white-space: nowrap;    
 `;
 
-const Slider_Item_Wrapper = styled(motion.div)`
+const SliderItemWrapper = styled(motion.div)`
     width: 16.8%;
 
     -webkit-text-size-adjust: 100%;
@@ -203,7 +203,7 @@ const Slider_Item_Wrapper = styled(motion.div)`
     }
 `;
 
-const Slider_Item_Container = styled.div`
+const SliderItemContainer = styled.div`
     max-height: 140px;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -220,7 +220,7 @@ const Slider_Item_Container = styled.div`
     display: block;    
 `;
 
-const Slider_Item = styled.div`
+const SliderItem = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -237,7 +237,7 @@ const Slider_Item = styled.div`
     /* background-color: #181818;  */
 `;
 
-const Slider_Img_Container = styled.div`
+const SliderImgContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -297,7 +297,7 @@ const Slider_Img_Container = styled.div`
     }
 `;
 
-const Slider_Img_Title = styled(motion.div)`
+const SliderImgTitle = styled(motion.div)`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -341,80 +341,80 @@ const Slider_Img_Title = styled(motion.div)`
     }
 `;
 
-const Slider_Next_Wrapper = styled.span`
-    /* height: 12rem; */
-    height: 100%;
+// const SliderNextWrapper = styled.span`
+//     /* height: 12rem; */
+//     height: 100%;
 
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    user-select: none;
-    font-size: .85vw;
-    word-break: keep-all;
-    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
-    line-height: 1.4;
-    bottom: 0;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 3.6%;
-    z-index: 20;
-    cursor: pointer;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-    background: hsla(0,0%,8%,.5);    
-    &:hover {
-        background: hsla(0, 0%, 8%, .7);
-        div > svg {
-            fill: white;
-        }
-    }
-`;
+//     -webkit-text-size-adjust: 100%;
+//     -webkit-font-smoothing: antialiased;
+//     user-select: none;
+//     font-size: .85vw;
+//     word-break: keep-all;
+//     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+//     line-height: 1.4;
+//     bottom: 0;
+//     color: #fff;
+//     display: flex;
+//     justify-content: center;
+//     position: absolute;
+//     text-align: center;
+//     top: 0;
+//     width: 3.6%;
+//     z-index: 20;
+//     cursor: pointer;
+//     border-bottom-left-radius: 4px;
+//     border-top-left-radius: 4px;
+//     background: hsla(0,0%,8%,.5);    
+//     &:hover {
+//         background: hsla(0, 0%, 8%, .7);
+//         div > svg {
+//             fill: white;
+//         }
+//     }
+// `;
 
-const Sldier_Next_Img = styled.div`
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    user-select: none;
-    word-break: keep-all;
-    color: #fff;
-    /* text-align: center; */
-    cursor: pointer;
-    /* speak: none;
-    font-family: nf-icon;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400; */
-    line-height: 1;
-    text-transform: none;
-    transform: translateZ(0);
-    align-self: center;
-    /* display: none; */
-    /* font-size: 2.5vw; */
-    height: auto;
-    transition: transform .1s ease-out 0s;
-    transform-origin: 45% 50%;    
-    padding-left: 7px;
-    svg {
-        -webkit-text-size-adjust: 100%;
-        -webkit-font-smoothing: antialiased;
-        font: inherit;
-        text-transform: none;
-        cursor: pointer;
-        user-select: none;
-        word-break: break-word;
-        white-space: nowrap;
-        color: white;
-        line-height: 0;
-        fill: none;
-        overflow: hidden;
-        height: 100%;
-        width: 100%;
-    }   
-`;
+// const SldierNextImg = styled.div`
+//     -webkit-text-size-adjust: 100%;
+//     -webkit-font-smoothing: antialiased;
+//     user-select: none;
+//     word-break: keep-all;
+//     color: #fff;
+//     /* text-align: center; */
+//     cursor: pointer;
+//     /* speak: none;
+//     font-family: nf-icon;
+//     font-style: normal;
+//     font-variant: normal;
+//     font-weight: 400; */
+//     line-height: 1;
+//     text-transform: none;
+//     transform: translateZ(0);
+//     align-self: center;
+//     /* display: none; */
+//     /* font-size: 2.5vw; */
+//     height: auto;
+//     transition: transform .1s ease-out 0s;
+//     transform-origin: 45% 50%;    
+//     padding-left: 7px;
+//     svg {
+//         -webkit-text-size-adjust: 100%;
+//         -webkit-font-smoothing: antialiased;
+//         font: inherit;
+//         text-transform: none;
+//         cursor: pointer;
+//         user-select: none;
+//         word-break: break-word;
+//         white-space: nowrap;
+//         color: white;
+//         line-height: 0;
+//         fill: none;
+//         overflow: hidden;
+//         height: 100%;
+//         width: 100%;
+//     }   
+// `;
 
-const Content_Play_Wrapper = styled(motion.div)`
+const ContentPlayWrapper = styled(motion.div)`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -461,7 +461,7 @@ const Content_Play_Wrapper = styled(motion.div)`
     }
 `;
 
-const Control_Button_Container = styled(motion.div)`
+const ControlButtonContainer = styled(motion.div)`
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -488,7 +488,7 @@ const Control_Button_Container = styled(motion.div)`
     background-color: #181818;  
 `;
 
-const Play_Button_Wrapper = styled.div`
+const PlayButtonWrapper = styled.div`
 
     position: absolute;
     left: 5%;
@@ -508,7 +508,7 @@ const Play_Button_Wrapper = styled.div`
     box-sizing: inherit;    
 `;
 
-const Play_Button_Container = styled.button`
+const PlayButtonContainer = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -545,7 +545,7 @@ const Play_Button_Container = styled.button`
     }
 `;
 
-const Play_Button_Gap = styled.div`
+const PlayButtonGap = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -562,7 +562,7 @@ const Play_Button_Gap = styled.div`
     width: 0.5rem;    
 `;
 
-const Play_Button_Svg_Wrapper = styled.div`
+const PlayButtonSvgWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -575,7 +575,7 @@ const Play_Button_Svg_Wrapper = styled.div`
     line-height: 0;
 `;
 
-const Play_Button_Svg = styled.div`
+const PlayButtonSvg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -611,7 +611,7 @@ const Play_Button_Svg = styled.div`
     }
 `;
 
-const Play_Title = styled.span`
+const PlayTitle = styled.span`
     -webkit-text-size-adjust: 100%;
     font: inherit;
     text-transform: none;
@@ -627,7 +627,7 @@ const Play_Title = styled.span`
     line-height: 2rem;    
 `;
 
-const Wish_Button_Wrapper = styled.div`
+const WishButtonWrapper = styled.div`
 
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -655,7 +655,7 @@ const Wish_Button_Wrapper = styled.div`
     }   
 `;
 
-const Wish_Button_Svg_Wrapper =styled.button`
+const WishButtonSvgWrapper =styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -708,7 +708,7 @@ const Wish_Button_Svg_Wrapper =styled.button`
     }    
 `;
 
-const Wish_Button_Svg = styled.div`
+const WishButtonSvg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -762,7 +762,7 @@ const SubHeader = styled.div`
     z-index: 1;
 `;
 
-const SubHeader_Wrapper = styled.div`
+const SubHeaderWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -800,7 +800,7 @@ const SubHeader_Wrapper = styled.div`
     }
 `;
 
-const SubHeader_Title = styled.div`
+const SubHeaderTitle = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -880,7 +880,7 @@ function Series(){
     const history = useHistory();
 
     // 로그인 관리 
-    const [login, setLogin] = useRecoilState(loginState);
+    const login = useRecoilValue(loginState);
     const [user, setUser] = useRecoilState<IUser | null>(userState);
     useEffect(() => {
     if(user === null){
@@ -891,10 +891,10 @@ function Series(){
             votedVideos: []
         }))
     }
-    }, []);
+    }, [login.email, setUser, user]);
 
     // tv series 데이터 가져오기
-    const { data, isLoading } = useQuery<IGetMoviesResult>(
+    const { data } = useQuery<IGetMoviesResult>(
         ["series", "popular"], 
         getSeries
     );
@@ -916,7 +916,6 @@ function Series(){
 
     const [isOpenMainDetail, setIsOpenMainDetail] = useState(false);
     const handleDetailInfo = (movieId?:number, movieTitle?:string) => {
-        console.log(movieId, movieTitle);
         if(movieId !== undefined && movieTitle !== undefined){
             setMovieInfo({
                 movieId: movieId,
@@ -929,10 +928,10 @@ function Series(){
 
     // 관심있는 영화/TV 추가 이벤트
     const favList = user?.favoriteVideos;
-    const [addFav, setAddFav] = useRecoilState(addFavoriteVideo);
-    const [delFav, setDelFav] = useRecoilState(removeFavoriteVideo);
-    const [addFavInfo, setAddFavInfo] = useRecoilState(addFavoriteVideoInfo);
-    const [delFavInfo, setDelFavInfo] = useRecoilState(removeFavoriteVideoInfo);
+    const setAddFav = useSetRecoilState(addFavoriteVideo);
+    const setDelFav = useSetRecoilState(removeFavoriteVideo);
+    const setAddFavInfo = useSetRecoilState(addFavoriteVideoInfo);
+    const setDelFavInfo = useSetRecoilState(removeFavoriteVideoInfo);
     
 
     const handleFavVideo = (
@@ -962,8 +961,8 @@ function Series(){
 
     // 좋아요 투표한 영화/TV 추가 이벤트
     const votedList = user?.votedVideos;
-    const [addVoted, setAddVoted] = useRecoilState(addVotedVideos);
-    const [delVoted, setDelVoted] = useRecoilState(removeVotedVideos);
+    const setAddVoted =  useSetRecoilState(addVotedVideos);
+    const setDelVoted = useSetRecoilState(removeVotedVideos);
     const handleVotedVideo = (movieId?: number) => {
         if (movieId !== undefined && movieId !== null){
             if(votedList?.includes(movieId)){
@@ -975,27 +974,27 @@ function Series(){
     }
 
     return (
-        <Body_Container $isOpen={isOpenMainDetail}>
+        <BodyContainer $isOpen={isOpenMainDetail}>
             {/* Header */}
             <MainHeader />
             <SubHeader>
                 <div>
-                    <SubHeader_Wrapper>
-                        <SubHeader_Title>
+                    <SubHeaderWrapper>
+                        <SubHeaderTitle>
                             <span>TV 시리즈</span>
-                        </SubHeader_Title>
-                    </SubHeader_Wrapper>
+                        </SubHeaderTitle>
+                    </SubHeaderWrapper>
                 </div>
             </SubHeader>
-            <MainView_Wrapper
+            <MainViewWrapper
                 style={{
                     marginTop: "11rem",
                 }}
             >
-                <MainView_Container>
+                <MainViewContainer>
                     {
                         mainData.map((item, idx) => (
-                            <Slide_Container
+                            <SlideContainer
                                 key={idx}
                                 style={{
                                     marginTop: "0",
@@ -1003,17 +1002,17 @@ function Series(){
                                 }}
                             >
                                 {/* content */}
-                                <Slide_Content_Wrapper>
+                                <SlideContentWrapper>
                                     <div>
-                                        <Slide_Layer_Wrapper>
-                                            <Slide_Content_Container>
+                                        <SlideLayerWrapper>
+                                            <SlideContentContainer>
                                                 {/* slider */}
-                                                <Slider_Wrapper>
+                                                <SliderWrapper>
                                                     <AnimatePresence
                                                         initial={false}
                                                         // mode="wait"
                                                         >
-                                                        <Slider_Container
+                                                        <SliderContainer
                                                             variants={rowVariants} 
                                                             initial="hidden"
                                                             animate="visible"
@@ -1025,25 +1024,25 @@ function Series(){
                                                                 item
                                                                 .map((movie) => (
                                                                     
-                                                                    <Slider_Item_Wrapper
-                                                                        layoutId={movie.id + "_series" + idx}
-                                                                        key={movie.id + "_series" + idx} 
+                                                                    <SliderItemWrapper
+                                                                        layoutId={movie.id + "series" + idx}
+                                                                        key={movie.id + "series" + idx} 
                                                                         whileHover="hover"
                                                                         initial="normal"
                                                                         variants={boxVariants}
                                                                         transition={{ type: "tween" }}
                                                                     >
                                                                         {/* <div> */}
-                                                                            <Slider_Item_Container>
+                                                                            <SliderItemContainer>
                                                                                 {/* <div> */}
-                                                                                    <Slider_Item>
-                                                                                        <Slider_Img_Container onClick={() => handleDetailInfo(movie.id, movie.name)}>
+                                                                                    <SliderItem>
+                                                                                        <SliderImgContainer onClick={() => handleDetailInfo(movie.id, movie.name)}>
                                                                                             {/* img */}
                                                                                             <img 
                                                                                                 decoding="async"
                                                                                                 src={makeImagePath(movie.backdrop_path || movie.poster_path, "w500")} alt="" />
                                                                                             {/* title */}
-                                                                                            <Content_Play_Wrapper variants={infoVariants}>
+                                                                                            <ContentPlayWrapper variants={infoVariants}>
                                                                                                 <svg 
                                                                                                     style={{
                                                                                                         position: "relative",
@@ -1055,46 +1054,46 @@ function Series(){
                                                                                                     <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Content_Play_Wrapper>
-                                                                                            <Slider_Img_Title>
+                                                                                            </ContentPlayWrapper>
+                                                                                            <SliderImgTitle>
                                                                                                 <p>{movie.name}</p>
-                                                                                            </Slider_Img_Title>
-                                                                                        </Slider_Img_Container>   
-                                                                                        {/* <Main_Title_Wrapper_ variants={infoVariants}>
-                                                                                            <Main_Title_>
+                                                                                            </SliderImgTitle>
+                                                                                        </SliderImgContainer>   
+                                                                                        {/* <MainTitleWrapper variants={infoVariants}>
+                                                                                            <MainTitle>
                                                                                                 {movie.title}
-                                                                                            </Main_Title_>
-                                                                                        </Main_Title_Wrapper_> */}
-                                                                                        <Control_Button_Container variants={infoVariants}>
+                                                                                            </MainTitle>
+                                                                                        </MainTitleWrapper> */}
+                                                                                        <ControlButtonContainer variants={infoVariants}>
                                                                                             {/* 재생 */}
-                                                                                            <Play_Button_Wrapper>
-                                                                                                <Play_Button_Container>
-                                                                                                    <Play_Button_Svg_Wrapper>
-                                                                                                        <Play_Button_Svg>
+                                                                                            <PlayButtonWrapper>
+                                                                                                <PlayButtonContainer>
+                                                                                                    <PlayButtonSvgWrapper>
+                                                                                                        <PlayButtonSvg>
                                                                                                             <svg 
                                                                                                                 style={{color: "white"}}
                                                                                                                 xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                                                                 <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                                                                 </path>
                                                                                                             </svg>
-                                                                                                        </Play_Button_Svg>
-                                                                                                    </Play_Button_Svg_Wrapper>
-                                                                                                    <Play_Button_Gap />
-                                                                                                    <Play_Title 
+                                                                                                        </PlayButtonSvg>
+                                                                                                    </PlayButtonSvgWrapper>
+                                                                                                    <PlayButtonGap />
+                                                                                                    <PlayTitle 
                                                                                                         onClick={() => handleDetailInfo(movie.id, movie.name)}
-                                                                                                        style={{color: "white"}}>상세 정보</Play_Title>
-                                                                                                </Play_Button_Container>
-                                                                                            </Play_Button_Wrapper>
+                                                                                                        style={{color: "white"}}>상세 정보</PlayTitle>
+                                                                                                </PlayButtonContainer>
+                                                                                            </PlayButtonWrapper>
 
                                                                                             {/* 관심 */}
-                                                                                            <Wish_Button_Wrapper 
+                                                                                            <WishButtonWrapper 
                                                                                                 style={{
                                                                                                     position: "absolute",
                                                                                                     right: "20%",
                                                                                                 }}
                                                                                                 onClick={() => handleFavVideo(movie?.id, movie?.title, movie?.backdrop_path, movie?.poster_path, movie?.name)} key={"wish"} >
-                                                                                                <Wish_Button_Svg_Wrapper>
-                                                                                                    <Wish_Button_Svg>
+                                                                                                <WishButtonSvgWrapper>
+                                                                                                    <WishButtonSvg>
                                                                                                         {/* not wish */}
                                                                                                         <svg 
                                                                                                             style={{display: movie?.id !== undefined ? favList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -1109,18 +1108,18 @@ function Series(){
                                                                                                             <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
                                                                                                             </path>
                                                                                                         </svg>
-                                                                                                    </Wish_Button_Svg>
-                                                                                                </Wish_Button_Svg_Wrapper>
-                                                                                            </Wish_Button_Wrapper>
+                                                                                                    </WishButtonSvg>
+                                                                                                </WishButtonSvgWrapper>
+                                                                                            </WishButtonWrapper>
                                                                                             {/* 좋아요 */}
-                                                                                            <Wish_Button_Wrapper 
+                                                                                            <WishButtonWrapper 
                                                                                                 style={{
                                                                                                     position: "absolute",
                                                                                                     right: "2%",
                                                                                                 }}
                                                                                                 onClick={() => handleVotedVideo(movie?.id)}  key={"like"}>
-                                                                                                <Wish_Button_Svg_Wrapper>
-                                                                                                    <Wish_Button_Svg>
+                                                                                                <WishButtonSvgWrapper>
+                                                                                                    <WishButtonSvg>
                                                                                                         {/* not like */}
                                                                                                         <svg 
                                                                                                             style={{display: movie?.id !== undefined ? votedList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -1135,35 +1134,35 @@ function Series(){
                                                                                                             <path fillRule="evenodd" clipRule="evenodd" d="M13.407 6.25579L13.313 5.50407C13.1342 4.07353 11.9181 3 10.4764 3C10.2133 3 10 3.21331 10 3.47644V6.7132C10 6.90062 9.94733 7.08427 9.848 7.2432L7.90742 10.3481C7.64516 10.7677 7.23665 11.0752 6.76086 11.2112L4.72528 11.7928C4.29598 11.9154 4 12.3078 4 12.7543V18.3161C4 18.6938 4.30618 19 4.68387 19C5.874 19 7.04352 19.3106 8.07684 19.9011L8.25 20C9.39679 20.6553 10.6947 21 12.0156 21H13H16H16.5C17.3284 21 18 20.3284 18 19.5C18 19.1158 17.8556 18.7654 17.6181 18.5H18C18.8284 18.5 19.5 17.8284 19.5 17C19.5 16.4601 19.2147 15.9868 18.7867 15.7226C19.478 15.5888 20 14.9804 20 14.25C20 13.4216 19.3284 12.75 18.5 12.75H18.3294C18.7336 12.4813 19 12.0217 19 11.5C19 10.6716 18.3284 10 17.5 10H13.125L13.407 7.74421C13.4688 7.24999 13.4688 6.75001 13.407 6.25579Z" fill="currentColor">
                                                                                                             </path>
                                                                                                         </svg>
-                                                                                                    </Wish_Button_Svg>
-                                                                                                </Wish_Button_Svg_Wrapper>
-                                                                                            </Wish_Button_Wrapper>
+                                                                                                    </WishButtonSvg>
+                                                                                                </WishButtonSvgWrapper>
+                                                                                            </WishButtonWrapper>
 
-                                                                                        </Control_Button_Container>
-                                                                                    </Slider_Item>
+                                                                                        </ControlButtonContainer>
+                                                                                    </SliderItem>
 
                                                                                 {/* </div> */}
                                                                                 {/* <div></div> */}
-                                                                            </Slider_Item_Container>
+                                                                            </SliderItemContainer>
                                                                         {/* </div> */}
 
-                                                                    </Slider_Item_Wrapper>
+                                                                    </SliderItemWrapper>
                                                                     
                                                                 ))
                                                             }
 
-                                                        </Slider_Container>
+                                                        </SliderContainer>
                                                     </AnimatePresence>
-                                                </Slider_Wrapper>
-                                            </Slide_Content_Container>
-                                        </Slide_Layer_Wrapper>
+                                                </SliderWrapper>
+                                            </SlideContentContainer>
+                                        </SlideLayerWrapper>
                                     </div>
-                                </Slide_Content_Wrapper>
-                            </Slide_Container>
+                                </SlideContentWrapper>
+                            </SlideContainer>
                         ))
                     }
-                </MainView_Container>
-            </MainView_Wrapper>
+                </MainViewContainer>
+            </MainViewWrapper>
             {/* Popup */}
             {
                 isOpenMainDetail && 
@@ -1178,7 +1177,7 @@ function Series(){
                     />
                 </>
             }
-        </Body_Container>
+        </BodyContainer>
     );
 }
 

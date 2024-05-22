@@ -1,7 +1,4 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import Home_old from './Routes/Home_old';
-import Tv from './Routes/Tv';
-import Search from './Routes/Search';
 import Header from './Components/Header';
 import Main from './Routes/Main';
 import Footer from './Components/Footer';

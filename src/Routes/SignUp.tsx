@@ -3,18 +3,18 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { loginState, signupState } from '../atoms';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import styled from 'styled-components';
 
-const Sign_Container = styled.div`
+const SignContainer = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     padding-bottom: 0;
 `;
 
-const Header_Container = styled.div`
+const HeaderContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -28,7 +28,7 @@ const Header_Container = styled.div`
     border-bottom: 1px solid #e6e6e6;
 `;
 
-const Header_Logo_Container = styled.a`
+const HeaderLogoContainer = styled.a`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -60,7 +60,7 @@ const Header_Logo_Container = styled.a`
     }
 `;
 
-const Logo_Span = styled.span`
+const LogoSpan = styled.span`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -91,7 +91,7 @@ const Login = styled.a`
     margin: 0 3%;
 `;
 
-const Body_Wrapper = styled.div<{$isShow?:boolean}>`
+const BodyWrapper = styled.div<{$isShow?:boolean}>`
     display: ${(props) => props.$isShow ? "" : "none"};
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -108,7 +108,7 @@ const Body_Wrapper = styled.div<{$isShow?:boolean}>`
     padding-bottom: 95px;
 `;
 
-const Body_Container = styled.div`
+const BodyContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -126,7 +126,7 @@ const Body_Container = styled.div`
     padding: 20px var(--layout-container-side-padding) 60px;
 `;
 
-const Step_Container = styled.div`
+const StepContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -141,7 +141,7 @@ const Step_Container = styled.div`
     max-width: 340px;
 `;
 
-const Step_Header_Wrapper = styled.div`
+const StepHeaderWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -173,7 +173,7 @@ const Step_Header_Wrapper = styled.div`
     }
 `;
 
-const Step_Header_Wrapper2 = styled.div`
+const StepHeaderWrapper2 = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -205,7 +205,7 @@ const Step_Header_Wrapper2 = styled.div`
     }    
 `;
 
-const Step_Title_Wrapper = styled.div`
+const StepTitleWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -218,7 +218,7 @@ const Step_Title_Wrapper = styled.div`
     text-align: center;
 `;
 
-const Step_Title_Container = styled.div`
+const StepTitleContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -232,7 +232,7 @@ const Step_Title_Container = styled.div`
     display: inline-block;
 `;
 
-const Step_Detail = styled.span`
+const StepDetail = styled.span`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -261,7 +261,7 @@ const Step_Detail = styled.span`
     }
 `;
 
-const Step_Title = styled.h1`
+const StepTitle = styled.h1`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -277,7 +277,7 @@ const Step_Title = styled.h1`
     font-size: 32px;
 `;
 
-const Content_Wrapper = styled.div`
+const ContentWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -295,7 +295,7 @@ const Content_Wrapper = styled.div`
     margin-top: 0;
 `;
 
-const Content_Container = styled.ul`
+const ContentContainer = styled.ul`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -367,7 +367,7 @@ const Content = styled.li`
     }
 `;
 
-const Submit_Button_Wrapper = styled.div`
+const SubmitButtonWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -383,7 +383,7 @@ const Submit_Button_Wrapper = styled.div`
     max-width: 340px;
 `;
 
-const Submit_Button = styled.button`
+const SubmitButton = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -422,7 +422,7 @@ const Submit_Button = styled.button`
 
 /***************************** */
 
-const Sub_Body_Wrapper = styled.div<{$isShow?:boolean}>`
+const SubBodyWrapper = styled.div<{$isShow?:boolean}>`
     display: ${(props) => props.$isShow ? "" : "none"};
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -439,7 +439,7 @@ const Sub_Body_Wrapper = styled.div<{$isShow?:boolean}>`
     padding-bottom: 95px;
 `;
 
-const Sub_Body_Container = styled.div`
+const SubBodyContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -456,7 +456,7 @@ const Sub_Body_Container = styled.div`
     transition: none 0s ease 0s;
 `;
 
-const Sub_Body_Container2 = styled.div`
+const SubBodyContainer2 = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -477,7 +477,7 @@ const Sub_Body_Container2 = styled.div`
     transition-duration: 250ms;    
 `;
 
-const Sub_Header_Wrapper = styled.div`
+const SubHeaderWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -490,7 +490,7 @@ const Sub_Header_Wrapper = styled.div`
     margin-bottom: 0.5rem;
 `;
 
-const Sub_Title_Wrapper = styled.div`
+const SubTitleWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -502,7 +502,7 @@ const Sub_Title_Wrapper = styled.div`
     display: inline-block;
 `;
 
-const Sub_Step_Detail = styled.span`
+const SubStepDetail = styled.span`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -529,7 +529,7 @@ const Sub_Step_Detail = styled.span`
     }
 `;
 
-const Sub_Title = styled.h1`
+const SubTitle = styled.h1`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -543,7 +543,7 @@ const Sub_Title = styled.h1`
     font-size: 32px;
 `;
 
-const Type_Wrapper = styled.div`
+const TypeWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -554,7 +554,7 @@ const Type_Wrapper = styled.div`
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 `;
 
-const Type_Container = styled.div`
+const TypeContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -570,7 +570,7 @@ const Type_Container = styled.div`
     align-items: stretch;
 `;
 
-const Type_Detail_Wrapper = styled.div`
+const TypeDetailWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -582,7 +582,7 @@ const Type_Detail_Wrapper = styled.div`
     flex-basis: 100%;
 `;
 
-const Type_Detail_Container = styled.div`
+const TypeDetailContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -595,7 +595,7 @@ const Type_Detail_Container = styled.div`
     height: 100%;
 `;
 
-const Detail_Input = styled.input`
+const DetailInput = styled.input`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -614,7 +614,7 @@ const Detail_Input = styled.input`
     padding: 0;
 `;
 
-const Detail_Label_Wrapper = styled.label`
+const DetailLabelWrapper = styled.label`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -627,7 +627,7 @@ const Detail_Label_Wrapper = styled.label`
     height: 100%;
 `;
 
-const Detail_Label_Container = styled.div<{$isSelected?:boolean, $type?:string}>`
+const DetailLabelContainer = styled.div<{$isSelected?:boolean, $type?:string}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -655,7 +655,7 @@ const Detail_Label_Container = styled.div<{$isSelected?:boolean, $type?:string}>
 `;
 
 
-const Detail_Title = styled.h2<{$isSelected?:boolean}>`
+const DetailTitle = styled.h2<{$isSelected?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -670,7 +670,7 @@ const Detail_Title = styled.h2<{$isSelected?:boolean}>`
 `;
 
 
-const Detail_Sub_Title = styled.sub<{$isSelected?:boolean}>`
+const DetailSubTitle = styled.sub<{$isSelected?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -686,7 +686,7 @@ const Detail_Sub_Title = styled.sub<{$isSelected?:boolean}>`
     bottom: 0px;
 `;
 
-const Detail_Svg_Wrapper = styled.div<{$isSelected?:boolean}>`
+const DetailSvgWrapper = styled.div<{$isSelected?:boolean}>`
     display: ${(props) => props.$isSelected ? "flex" : "none"} ;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -717,7 +717,7 @@ const Detail_Svg_Wrapper = styled.div<{$isSelected?:boolean}>`
     opacity: 1;
 `;
 
-const Detail_Svg = styled.svg`
+const DetailSvg = styled.svg`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -737,7 +737,7 @@ const Detail_Svg = styled.svg`
     }
 `;
 
-const Sub_Content_Wrapper = styled.div`
+const SubContentWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -750,7 +750,7 @@ const Sub_Content_Wrapper = styled.div`
     margin-top: 15px;
 `;
 
-const Sub_Content_Container = styled.ul`
+const SubContentContainer = styled.ul`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -764,7 +764,7 @@ const Sub_Content_Container = styled.ul`
     width: 100%;
 `;
 
-const Sub_Item_Wrapper = styled.li`
+const SubItemWrapper = styled.li`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -782,7 +782,7 @@ const Sub_Item_Wrapper = styled.li`
     border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 `;
 
-const Sub_Item_Container = styled.div`
+const SubItemContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -801,7 +801,7 @@ const Sub_Item_Container = styled.div`
     align-items: center;
 `;
 
-const Sub_Item_Title = styled.div`
+const SubItemTitle = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -816,7 +816,7 @@ const Sub_Item_Title = styled.div`
     flex: 0 0 40%;
 `;
 
-const Sub_Item_Content = styled.div<{$isMain?:boolean}>`
+const SubItemContent = styled.div<{$isMain?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -833,7 +833,7 @@ const Sub_Item_Content = styled.div<{$isMain?:boolean}>`
     text-align: right;
 `;
 
-const Sub_Button_Wrapper = styled.div`
+const SubButtonWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -846,7 +846,7 @@ const Sub_Button_Wrapper = styled.div`
     max-width: 440px;
 `;
 
-const Sub_Button = styled.button`
+const SubButton = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -896,7 +896,7 @@ const Sub_Button = styled.button`
     }
 `;
 
-const Step_Cotent = styled.div`
+const StepCotent = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -914,7 +914,7 @@ const Step_Cotent = styled.div`
     margin-top: 0;
 `;
 
-const Signup_Form = styled.form`
+const SignupForm = styled.form`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -926,7 +926,7 @@ const Signup_Form = styled.form`
     --layout-container-side-padding: 32px;    
 `;
 
-const Signup_Form_Container = styled.div`
+const SignupFormContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -941,7 +941,7 @@ const Signup_Form_Container = styled.div`
     text-align: left;    
 `;
 
-const Signup_Header_Wrapper = styled.div`
+const SignupHeaderWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -954,7 +954,7 @@ const Signup_Header_Wrapper = styled.div`
     text-align: left;    
 `;
 
-const Signup_Header_Container = styled.div`
+const SignupHeaderContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -969,7 +969,7 @@ const Signup_Header_Container = styled.div`
     margin-top: 20px;    
 `;
 
-const Signup_Step = styled.span`
+const SignupStep = styled.span`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -998,7 +998,7 @@ const Signup_Step = styled.span`
     }
 `;
 
-const Signup_Title = styled.h1`
+const SignupTitle = styled.h1`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1014,7 +1014,7 @@ const Signup_Title = styled.h1`
     font-size: 32px;    
 `;
 
-const Signup_Sub_Title1 = styled.div`
+const SignupSubTitle1 = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1029,7 +1029,7 @@ const Signup_Sub_Title1 = styled.div`
     margin-top: 0;
 `;
 
-const Signup_Sub_Title2 = styled.span`
+const SignupSubTitle2 = styled.span`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1044,7 +1044,7 @@ const Signup_Sub_Title2 = styled.span`
     margin-top: 10px;    
 `;
 
-const Signup_Items_Container = styled.ul`
+const SignupItemsContainer = styled.ul`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1060,7 +1060,7 @@ const Signup_Items_Container = styled.ul`
     margin: 16px 0 20px;    
 `;
 
-const Signup_Item_Wrapper = styled.li`
+const SignupItemWrapper = styled.li`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1075,7 +1075,7 @@ const Signup_Item_Wrapper = styled.li`
     margin-left: 0;
 `;
 
-const Signup_Item_Container = styled.div`
+const SignupItemContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1093,7 +1093,7 @@ const Signup_Item_Container = styled.div`
     vertical-align: text-top;    
 `;
 
-const Signup_Lable = styled.label<{$isEmailFocus:boolean}>`
+const SignupLable = styled.label<{$isEmailFocus:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1122,7 +1122,7 @@ const Signup_Lable = styled.label<{$isEmailFocus:boolean}>`
     color: rgba(0, 0, 0, 0.7);    
 `;
 
-const Signup_Input_Container = styled.div`
+const SignupInputContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1149,7 +1149,7 @@ const Signup_Input_Container = styled.div`
     min-width: 0px;    
 `;
 
-const Sign_Input = styled.input<{$isEmailFocus:boolean}>`
+const SignInput = styled.input<{$isEmailFocus:boolean}>`
     /* filter: opacity(${(props) => props.$isEmailFocus ? 100 : 0}%); */
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -1185,7 +1185,7 @@ const Sign_Input = styled.input<{$isEmailFocus:boolean}>`
     font-size: 1rem;    
 `;
 
-const Sign_Input_Border = styled.div<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
+const SignInputBorder = styled.div<{$isFocus?:boolean, $isEmailError?:boolean, $isValid?:boolean}>`
     outline: ${(props) => props.$isFocus ? "rgb(0, 0, 0) solid 0.125rem" : "none"};
     outline-offset: ${(props) => props.$isFocus ? "0.125rem" : "none"} !important;
     border-color: ${(props) => props.$isEmailError ? "rgb(193, 17, 25)" : (props.$isValid) ? "rgb(12, 136, 73)" : "rgba(128, 128, 128)"} ;
@@ -1221,7 +1221,7 @@ const Sign_Input_Border = styled.div<{$isFocus?:boolean, $isEmailError?:boolean,
     /* border-color: rgb(128, 128, 128);     */
 `;
 
-const Signup_Error = styled.div<{$isEmailError?:boolean}>`
+const SignupError = styled.div<{$isEmailError?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1261,7 +1261,7 @@ const Signup_Error = styled.div<{$isEmailError?:boolean}>`
     } 
 `;
 
-const Signup_Button_Wrapper = styled.div`
+const SignupButtonWrapper = styled.div`
      -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1277,7 +1277,7 @@ const Signup_Button_Wrapper = styled.div`
     margin-top: 24px;   
 `;
 
-const Signup_Button = styled.button`
+const SignupButton = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1315,7 +1315,7 @@ const Signup_Button = styled.button`
     }
 `;
 
-const Contract_Container = styled.div`
+const ContractContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #333;
@@ -1334,7 +1334,7 @@ const Contract_Container = styled.div`
     line-height: 1.5;    
 `;
 
-const Contract_Button_Container = styled.div`
+const ContractButtonContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1362,7 +1362,7 @@ const Contract_Button_Container = styled.div`
     min-width: 0;   
 `;
 
-const Contract_Button_Input = styled.input`
+const ContractButtonInput = styled.input`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1397,7 +1397,7 @@ const Contract_Button_Input = styled.input`
     border-radius: 0.125rem;    
 `;
 
-const Contract_Button_Svg_Container = styled.div<{$isChecked:boolean, $isError?:boolean}>`
+const ContractButtonSvgContainer = styled.div<{$isChecked:boolean, $isError?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1462,7 +1462,7 @@ const Contract_Button_Svg_Container = styled.div<{$isChecked:boolean, $isError?:
     }
 `;
 
-const Contract_Label = styled.label`
+const ContractLabel = styled.label`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     direction: ltr;
@@ -1481,7 +1481,7 @@ const Contract_Label = styled.label`
     color: rgb(0,0,0);    
 `;
 
-const Contract_Error_Container = styled.div<{$isError:boolean}>`
+const ContractErrorContainer = styled.div<{$isError:boolean}>`
     display: ${(props) => props.$isError ? "" : "none"} ;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -1532,7 +1532,7 @@ interface IForm {
 function Sign() {
 
     const history = useHistory();
-    const { register, watch, handleSubmit, formState:{errors, isValid, isValidating}, getValues, setValue, trigger, setFocus} = useForm();
+    const { register, handleSubmit, formState:{errors, isValid}, getValues, setValue, trigger, setFocus} = useForm();
 
     const mainSingup = useRouteMatch({path: "/signup", exact: true});
     const subSingup = useRouteMatch({path: "/signup/planform", exact: true});
@@ -1627,7 +1627,7 @@ function Sign() {
 
     // 2단계 이메일 & 비밀번호
     const [login, setLogin] = useRecoilState(loginState);
-    const [signup, setSignup] = useRecoilState(signupState);
+    const setSignup = useSetRecoilState(signupState);
     const onValid = (data:IForm) => {
         
         if(isValid && isChecked){
@@ -1645,7 +1645,7 @@ function Sign() {
             trigger();
             setFocus("email");
         }
-    }, []);
+    }, [login.email, setValue, setFocus, trigger]);
 
     // 이메일
     const [isCmFocusEamil, setIsCmFocusEamil] = useState(false);
@@ -1680,10 +1680,10 @@ function Sign() {
     }
 
     return (
-        <Sign_Container>
-            <Header_Container>
+        <SignContainer>
+            <HeaderContainer>
                 {/* Header */}
-                <Header_Logo_Container>
+                <HeaderLogoContainer>
                     {/* Logo */}
                     <svg viewBox="0 0 111 30" data-uia="netflix-logo" aria-hidden="true" focusable="false">
                         <g id="netflix-logo">
@@ -1691,36 +1691,36 @@ function Sign() {
                             </path>
                         </g>
                     </svg>
-                    <Logo_Span>Netflix 홈</Logo_Span>
-                </Header_Logo_Container>
+                    <LogoSpan>Netflix 홈</LogoSpan>
+                </HeaderLogoContainer>
                 {/* Login */}
                 <Login href="/login">로그인</Login>
-            </Header_Container>
+            </HeaderContainer>
             {/* Body : Step 1/3 Main */}
-            <Body_Wrapper $isShow={isShowMain} >
-                <Body_Container>
-                    <Step_Container>
+            <BodyWrapper $isShow={isShowMain} >
+                <BodyContainer>
+                    <StepContainer>
                         {/* Header */}
-                        <Step_Header_Wrapper>
+                        <StepHeaderWrapper>
                             <span />
-                        </Step_Header_Wrapper>
+                        </StepHeaderWrapper>
                         {/* Title */}
-                        <Step_Title_Wrapper>
-                            <Step_Title_Container>
+                        <StepTitleWrapper>
+                            <StepTitleContainer>
                                 {/* Detail */}
-                                <Step_Detail>
+                                <StepDetail>
                                     <b>1</b>
                                     /
                                     <b>2단계</b>
-                                </Step_Detail>
-                                <Step_Title>
+                                </StepDetail>
+                                <StepTitle>
                                     원하는 멤버십을 선택하세요.
-                                </Step_Title>
-                            </Step_Title_Container>
-                        </Step_Title_Wrapper>
+                                </StepTitle>
+                            </StepTitleContainer>
+                        </StepTitleWrapper>
                         {/* Content */}
-                        <Content_Wrapper>
-                            <Content_Container>
+                        <ContentWrapper>
+                            <ContentContainer>
                                 <Content>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CheckmarkStandard" aria-hidden="true">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
@@ -1742,179 +1742,179 @@ function Sign() {
                                     </svg>
                                     <span>가지고 계신 모든 디바이스에서 넷플릭스를 즐겨보세요.</span>
                                 </Content>
-                            </Content_Container>
-                        </Content_Wrapper>
+                            </ContentContainer>
+                        </ContentWrapper>
                         {/* Submit Button */}
-                        <Submit_Button_Wrapper>
-                            <Submit_Button onClick={() => handleNextStep(1)}>
+                        <SubmitButtonWrapper>
+                            <SubmitButton onClick={() => handleNextStep(1)}>
                                 다음
-                            </Submit_Button>
-                        </Submit_Button_Wrapper>
-                    </Step_Container>
-                </Body_Container>
-            </Body_Wrapper>
+                            </SubmitButton>
+                        </SubmitButtonWrapper>
+                    </StepContainer>
+                </BodyContainer>
+            </BodyWrapper>
             {/* Body : Step 1/3 Sub */}
-            <Sub_Body_Wrapper $isShow={isShowSub}>
-                <Sub_Body_Container>
+            <SubBodyWrapper $isShow={isShowSub}>
+                <SubBodyContainer>
                     {/* MemberShip */}
                     {/* Title */}
-                    <Sub_Header_Wrapper>
+                    <SubHeaderWrapper>
                         <div>
-                            <Sub_Title_Wrapper>
-                                <Sub_Step_Detail>
+                            <SubTitleWrapper>
+                                <SubStepDetail>
                                     <b>1</b>
                                     /
                                     <b>2단계</b>
-                                </Sub_Step_Detail>
-                                <Sub_Title>
+                                </SubStepDetail>
+                                <SubTitle>
                                     원하는 멤버십을 선택하세요.
-                                </Sub_Title>
-                            </Sub_Title_Wrapper>
+                                </SubTitle>
+                            </SubTitleWrapper>
                         </div>
-                    </Sub_Header_Wrapper>
+                    </SubHeaderWrapper>
                     {/* Type */}
-                    <Type_Wrapper>
-                        <Type_Container>
+                    <TypeWrapper>
+                        <TypeContainer>
                             {/* Detail */}
                             {/* Type1: Premium */}
-                            <Type_Detail_Wrapper>
-                                <Type_Detail_Container>
-                                    <Detail_Input 
+                            <TypeDetailWrapper>
+                                <TypeDetailContainer>
+                                    <DetailInput 
                                         onClick={handleType}
                                         type="radio" id="premium" value={1} defaultChecked={isSelectedType1}/>
-                                    <Detail_Label_Wrapper htmlFor="premium">
-                                        <Detail_Label_Container $isSelected={isSelectedType1} $type={"1"}>
+                                    <DetailLabelWrapper htmlFor="premium">
+                                        <DetailLabelContainer $isSelected={isSelectedType1} $type={"1"}>
                                             {/* Title */}
-                                            <Detail_Title $isSelected={isSelectedType1}>프리미엄</Detail_Title>
+                                            <DetailTitle $isSelected={isSelectedType1}>프리미엄</DetailTitle>
                                             {/* Sub Title */}
-                                            <Detail_Sub_Title $isSelected={isSelectedType1}>4K + HDR</Detail_Sub_Title>
+                                            <DetailSubTitle $isSelected={isSelectedType1}>4K + HDR</DetailSubTitle>
                                             {/* Button */}
-                                            <Detail_Svg_Wrapper $isSelected={isSelectedType1} aria-setsize={14}>
-                                                <Detail_Svg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
+                                            <DetailSvgWrapper $isSelected={isSelectedType1} aria-setsize={14}>
+                                                <DetailSvg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M12.0183 21.0833C17.7761 21.0833 22.4438 16.5688 22.4438 11C22.4438 5.43112 17.7761 0.916656 12.0183 0.916656C6.26044 0.916656 1.59277 5.43112 1.59277 11C1.59277 16.5688 6.26044 21.0833 12.0183 21.0833ZM11.7407 14.3982L17.4273 8.89817L16.087 7.60181L11.0705 12.4536L8.89738 10.3518L7.55702 11.6482L10.4004 14.3982L11.0705 15.0463L11.7407 14.3982Z" fill="#0071EB">
                                                     </path>
-                                                </Detail_Svg>
-                                            </Detail_Svg_Wrapper>
-                                        </Detail_Label_Container>
-                                    </Detail_Label_Wrapper>
-                                </Type_Detail_Container>
-                            </Type_Detail_Wrapper>
+                                                </DetailSvg>
+                                            </DetailSvgWrapper>
+                                        </DetailLabelContainer>
+                                    </DetailLabelWrapper>
+                                </TypeDetailContainer>
+                            </TypeDetailWrapper>
                             {/* Type2: Standard */}
-                            <Type_Detail_Wrapper>
-                                <Type_Detail_Container>
-                                    <Detail_Input 
+                            <TypeDetailWrapper>
+                                <TypeDetailContainer>
+                                    <DetailInput 
                                         onClick={handleType}
                                         type="radio" id="standard" value={2} defaultChecked={isSelectedType2}/>
-                                    <Detail_Label_Wrapper htmlFor="standard">
-                                        <Detail_Label_Container $isSelected={isSelectedType2} $type={"2"}>
+                                    <DetailLabelWrapper htmlFor="standard">
+                                        <DetailLabelContainer $isSelected={isSelectedType2} $type={"2"}>
                                             {/* Title */}
-                                            <Detail_Title $isSelected={isSelectedType2}>스탠다드</Detail_Title>
+                                            <DetailTitle $isSelected={isSelectedType2}>스탠다드</DetailTitle>
                                             {/* Sub Title */}
-                                            <Detail_Sub_Title $isSelected={isSelectedType2}>1080p</Detail_Sub_Title>
+                                            <DetailSubTitle $isSelected={isSelectedType2}>1080p</DetailSubTitle>
                                             {/* Button */}
-                                            <Detail_Svg_Wrapper $isSelected={isSelectedType2} aria-setsize={14}>
-                                                <Detail_Svg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
+                                            <DetailSvgWrapper $isSelected={isSelectedType2} aria-setsize={14}>
+                                                <DetailSvg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M12.0183 21.0833C17.7761 21.0833 22.4438 16.5688 22.4438 11C22.4438 5.43112 17.7761 0.916656 12.0183 0.916656C6.26044 0.916656 1.59277 5.43112 1.59277 11C1.59277 16.5688 6.26044 21.0833 12.0183 21.0833ZM11.7407 14.3982L17.4273 8.89817L16.087 7.60181L11.0705 12.4536L8.89738 10.3518L7.55702 11.6482L10.4004 14.3982L11.0705 15.0463L11.7407 14.3982Z" fill="#0071EB">
                                                     </path>
-                                                </Detail_Svg>
-                                            </Detail_Svg_Wrapper>
-                                        </Detail_Label_Container>
-                                    </Detail_Label_Wrapper>
-                                </Type_Detail_Container>
-                            </Type_Detail_Wrapper>
+                                                </DetailSvg>
+                                            </DetailSvgWrapper>
+                                        </DetailLabelContainer>
+                                    </DetailLabelWrapper>
+                                </TypeDetailContainer>
+                            </TypeDetailWrapper>
                             {/* Type3: Ad Standard */}
-                            <Type_Detail_Wrapper>
-                                <Type_Detail_Container>
-                                    <Detail_Input 
+                            <TypeDetailWrapper>
+                                <TypeDetailContainer>
+                                    <DetailInput 
                                         onClick={handleType}
                                         type="radio" id="adStandard" value={3} defaultChecked={isSelectedType3}/>
-                                    <Detail_Label_Wrapper htmlFor="adStandard">
-                                        <Detail_Label_Container $isSelected={isSelectedType3} $type={"3"}>
+                                    <DetailLabelWrapper htmlFor="adStandard">
+                                        <DetailLabelContainer $isSelected={isSelectedType3} $type={"3"}>
                                             {/* Title */}
-                                            <Detail_Title $isSelected={isSelectedType3}>광고형 스탠다드</Detail_Title>
+                                            <DetailTitle $isSelected={isSelectedType3}>광고형 스탠다드</DetailTitle>
                                             {/* Sub Title */}
-                                            <Detail_Sub_Title $isSelected={isSelectedType3}>1080p</Detail_Sub_Title>
+                                            <DetailSubTitle $isSelected={isSelectedType3}>1080p</DetailSubTitle>
                                             {/* Button */}
-                                            <Detail_Svg_Wrapper $isSelected={isSelectedType3} aria-setsize={14}>
-                                                <Detail_Svg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
+                                            <DetailSvgWrapper $isSelected={isSelectedType3} aria-setsize={14}>
+                                                <DetailSvg width="24" height="22" viewBox="0 0 24 22" fill="none" data-uia="success-svg">
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M12.0183 21.0833C17.7761 21.0833 22.4438 16.5688 22.4438 11C22.4438 5.43112 17.7761 0.916656 12.0183 0.916656C6.26044 0.916656 1.59277 5.43112 1.59277 11C1.59277 16.5688 6.26044 21.0833 12.0183 21.0833ZM11.7407 14.3982L17.4273 8.89817L16.087 7.60181L11.0705 12.4536L8.89738 10.3518L7.55702 11.6482L10.4004 14.3982L11.0705 15.0463L11.7407 14.3982Z" fill="#0071EB">
                                                     </path>
-                                                </Detail_Svg>
-                                            </Detail_Svg_Wrapper>
-                                        </Detail_Label_Container>
-                                    </Detail_Label_Wrapper>
-                                </Type_Detail_Container>
-                            </Type_Detail_Wrapper>
-                        </Type_Container>
-                    </Type_Wrapper>
+                                                </DetailSvg>
+                                            </DetailSvgWrapper>
+                                        </DetailLabelContainer>
+                                    </DetailLabelWrapper>
+                                </TypeDetailContainer>
+                            </TypeDetailWrapper>
+                        </TypeContainer>
+                    </TypeWrapper>
                     {/* Content */}
-                    <Sub_Content_Wrapper>
-                        <Sub_Content_Container>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>월 요금</Sub_Item_Title>
+                    <SubContentWrapper>
+                        <SubContentContainer>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>월 요금</SubItemTitle>
                                     {/* Type1: Premium | Type2: Standard | Type3: Ad Standard */}
-                                    <Sub_Item_Content $isMain={true}>
+                                    <SubItemContent $isMain={true}>
                                         { isSelectedType1 ? "17,000원" 
                                         : isSelectedType2 ? "13,500원" 
                                         : "5,500원"} 
-                                    </Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>화질과 음질</Sub_Item_Title>
+                                    </SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>화질과 음질</SubItemTitle>
                                     {/* Type1: Premium | Type2: Standard & Type3: Ad Standard */}
-                                    <Sub_Item_Content>
+                                    <SubItemContent>
                                         { isSelectedType1 ? "가장 좋음" : "좋음"}
-                                    </Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>해상도</Sub_Item_Title>
+                                    </SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>해상도</SubItemTitle>
                                     {/* Type1: Premium | Type2: Standard & Type3: Ad Standard */}
-                                    <Sub_Item_Content>{ isSelectedType1 ? "4K(UHD) + HDR" : "1080p(풀 HD)"}</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
+                                    <SubItemContent>{ isSelectedType1 ? "4K(UHD) + HDR" : "1080p(풀 HD)"}</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
                             {/* Type1: Premium */}
-                            <Sub_Item_Wrapper style={{
+                            <SubItemWrapper style={{
                                 display: isSelectedType1 ? "flex" : "none"
                             }}>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>공간 음향(이머시브 사운드)</Sub_Item_Title>
-                                    <Sub_Item_Content>포함</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>지원 디바이스</Sub_Item_Title>
-                                    <Sub_Item_Content>TV, 컴퓨터, 스마트폰, 태블릿</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>가구 구성원 간 동시접속자 수</Sub_Item_Title>
+                                <SubItemContainer>
+                                    <SubItemTitle>공간 음향(이머시브 사운드)</SubItemTitle>
+                                    <SubItemContent>포함</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>지원 디바이스</SubItemTitle>
+                                    <SubItemContent>TV, 컴퓨터, 스마트폰, 태블릿</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>가구 구성원 간 동시접속자 수</SubItemTitle>
                                     {/* Type1: Premium | Type2: Standard & Type3: Ad Standard */}
-                                    <Sub_Item_Content>{ isSelectedType1 ? "4" : "2" }</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>저장 디바이스</Sub_Item_Title>
+                                    <SubItemContent>{ isSelectedType1 ? "4" : "2" }</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper>
+                                <SubItemContainer>
+                                    <SubItemTitle>저장 디바이스</SubItemTitle>
                                     {/* Type1: Premium | Type2: Standard & Type3: Ad Standard */}
-                                    <Sub_Item_Content>{ isSelectedType1 ? "6" : "2" }</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                            <Sub_Item_Wrapper style={{borderBottom : "none"}}>
-                                <Sub_Item_Container>
-                                    <Sub_Item_Title>광고</Sub_Item_Title>
+                                    <SubItemContent>{ isSelectedType1 ? "6" : "2" }</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                            <SubItemWrapper style={{borderBottom : "none"}}>
+                                <SubItemContainer>
+                                    <SubItemTitle>광고</SubItemTitle>
                                     {/* Type1: Premium & Type2: Standard : Type3: Ad Standard */}
-                                    <Sub_Item_Content>{ isSelectedType3 ? "시간당 단 몇 분" : "무광고" }</Sub_Item_Content>
-                                </Sub_Item_Container>
-                            </Sub_Item_Wrapper>
-                        </Sub_Content_Container>
-                    </Sub_Content_Wrapper>
+                                    <SubItemContent>{ isSelectedType3 ? "시간당 단 몇 분" : "무광고" }</SubItemContent>
+                                </SubItemContainer>
+                            </SubItemWrapper>
+                        </SubContentContainer>
+                    </SubContentWrapper>
                     {/* Detail */}
                     <div style={{margin: "0px -16px",}}>
                         <div>
@@ -1949,84 +1949,84 @@ function Sign() {
                     </div>
                     {/* Next Button */}
                     <div>
-                        <Sub_Button_Wrapper>
-                            <Sub_Button onClick={() => handleNextStep(2)}>다음</Sub_Button>
-                        </Sub_Button_Wrapper>
+                        <SubButtonWrapper>
+                            <SubButton onClick={() => handleNextStep(2)}>다음</SubButton>
+                        </SubButtonWrapper>
                     </div>
-                </Sub_Body_Container>
-            </Sub_Body_Wrapper>
+                </SubBodyContainer>
+            </SubBodyWrapper>
             {/* Body : Step 2/3 Main */}
-            <Body_Wrapper $isShow={isShowMain2}>
-                <Body_Container>
-                    <Step_Container>
+            <BodyWrapper $isShow={isShowMain2}>
+                <BodyContainer>
+                    <StepContainer>
                         {/* Header */}
-                        <Step_Header_Wrapper2>
+                        <StepHeaderWrapper2>
                             <span></span>
-                        </Step_Header_Wrapper2>
+                        </StepHeaderWrapper2>
                         {/* Title */}
-                        <Step_Title_Wrapper>
-                            <Step_Title_Container>
+                        <StepTitleWrapper>
+                            <StepTitleContainer>
                                 {/* Detail */}
-                                <Step_Detail>
+                                <StepDetail>
                                     <b>2</b>
                                     /
                                     <b>2단계</b>
-                                </Step_Detail>
-                                <Step_Title>
+                                </StepDetail>
+                                <StepTitle>
                                     계정 설정 마무리하기
-                                </Step_Title>
-                            </Step_Title_Container>
-                        </Step_Title_Wrapper>
+                                </StepTitle>
+                            </StepTitleContainer>
+                        </StepTitleWrapper>
                         {/* Content */}
-                        <Step_Cotent>
+                        <StepCotent>
                             맞춤형 콘텐츠 서비스, 넷플릭스! 비밀번호를 설정하고 넷플릭스를 시청하세요.
-                        </Step_Cotent>
+                        </StepCotent>
                         {/* Submit Button */}
-                        <Submit_Button_Wrapper>
-                            <Submit_Button onClick={() => handleNextStep(3)}>
+                        <SubmitButtonWrapper>
+                            <SubmitButton onClick={() => handleNextStep(3)}>
                                 다음
-                            </Submit_Button>
-                        </Submit_Button_Wrapper>
-                    </Step_Container>
-                </Body_Container>
-            </Body_Wrapper>
+                            </SubmitButton>
+                        </SubmitButtonWrapper>
+                    </StepContainer>
+                </BodyContainer>
+            </BodyWrapper>
             {/* Body : Step 2/3 Sub */}
-            <Sub_Body_Wrapper $isShow={isShowSub2}>
-                <Sub_Body_Container2>
+            <SubBodyWrapper $isShow={isShowSub2}>
+                <SubBodyContainer2>
                     {/* Form */}
-                    <Signup_Form onSubmit={handleSubmit(onValid)}>
-                        <Signup_Form_Container>
+                    <SignupForm onSubmit={handleSubmit(onValid)}>
+                        <SignupFormContainer>
                             <div>
                                 {/* Header */}
-                                <Signup_Header_Wrapper>
-                                    <Signup_Header_Container>
+                                <SignupHeaderWrapper>
+                                    <SignupHeaderContainer>
                                         {/* Step & Title */}
-                                        <Signup_Step>
+                                        <SignupStep>
                                             <b>2</b>
                                             /
                                             <b>2단계</b>
-                                        </Signup_Step>
-                                        <Signup_Title>
+                                        </SignupStep>
+                                        <SignupTitle>
                                             비밀번호를 설정해 멤버십을 시작하세요
-                                        </Signup_Title>
-                                    </Signup_Header_Container>
-                                </Signup_Header_Wrapper>
+                                        </SignupTitle>
+                                    </SignupHeaderContainer>
+                                </SignupHeaderWrapper>
                             </div>
                             <div>
-                                <Signup_Sub_Title1>몇 단계만 더 거치면 넷플릭스 가입 완료!</Signup_Sub_Title1>
-                                <Signup_Sub_Title2>복잡한 단계는 모두 없앴습니다.</Signup_Sub_Title2>
-                                <Signup_Items_Container>
+                                <SignupSubTitle1>몇 단계만 더 거치면 넷플릭스 가입 완료!</SignupSubTitle1>
+                                <SignupSubTitle2>복잡한 단계는 모두 없앴습니다.</SignupSubTitle2>
+                                <SignupItemsContainer>
                                     {/* 이메일주소 */}
-                                    <Signup_Item_Wrapper>
-                                        <Signup_Item_Container>
-                                            <Signup_Lable 
+                                    <SignupItemWrapper>
+                                        <SignupItemContainer>
+                                            <SignupLable 
                                                 $isEmailFocus={isEmailFocus}
-                                                htmlFor="signup_email">
+                                                htmlFor="signupemail">
                                                 이메일 주소
-                                            </Signup_Lable>
-                                            <Signup_Input_Container>
-                                                <Sign_Input 
-                                                    id="signup_email" 
+                                            </SignupLable>
+                                            <SignupInputContainer>
+                                                <SignInput 
+                                                    id="signupemail" 
                                                     type="email" 
                                                     $isEmailFocus={isEmailFocus}
                                                     onFocus={handleEmailFocus}
@@ -2048,13 +2048,13 @@ function Sign() {
                                                         },
                                                     })}
                                                 />
-                                                <Sign_Input_Border 
+                                                <SignInputBorder 
                                                     $isFocus={isCmFocusEamil} 
                                                     $isEmailError={(errors?.email?.message) ? true : false} 
                                                     $isValid={isValid} 
                                                 />
-                                            </Signup_Input_Container>
-                                            <Signup_Error
+                                            </SignupInputContainer>
+                                            <SignupError
                                                 $isEmailError={(errors?.email?.message) ? true : false}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
@@ -2062,20 +2062,20 @@ function Sign() {
                                                     </path>
                                                 </svg>
                                                 {typeof errors?.email?.message === 'string' && errors?.email?.message}
-                                            </Signup_Error>
-                                        </Signup_Item_Container>
-                                    </Signup_Item_Wrapper>
+                                            </SignupError>
+                                        </SignupItemContainer>
+                                    </SignupItemWrapper>
                                     {/* 비밀번호 */}
-                                    <Signup_Item_Wrapper>
-                                        <Signup_Item_Container>
-                                            <Signup_Lable 
+                                    <SignupItemWrapper>
+                                        <SignupItemContainer>
+                                            <SignupLable 
                                                 $isEmailFocus={isPasswordFocus}
-                                                htmlFor="signup_password">
+                                                htmlFor="signuppassword">
                                                 비밀번호를 추가하세요
-                                            </Signup_Lable>
-                                            <Signup_Input_Container>
-                                                <Sign_Input 
-                                                    id="signup_password" 
+                                            </SignupLable>
+                                            <SignupInputContainer>
+                                                <SignInput 
+                                                    id="signuppassword" 
                                                     type="password" 
                                                     $isEmailFocus={isPasswordFocus} 
                                                     onFocus={handlePasswordFocus}
@@ -2094,13 +2094,13 @@ function Sign() {
                                                         },
                                                     })}
                                                 />
-                                                <Sign_Input_Border 
+                                                <SignInputBorder 
                                                     $isFocus={isCmFocusPassword} 
                                                     $isEmailError={(errors?.password?.message) ? true : false} 
                                                     $isValid={isValid} 
                                                 />
-                                            </Signup_Input_Container>
-                                            <Signup_Error
+                                            </SignupInputContainer>
+                                            <SignupError
                                                 $isEmailError={(errors?.password?.message) ? true : false}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
@@ -2108,63 +2108,63 @@ function Sign() {
                                                     </path>
                                                 </svg>
                                                 {typeof errors?.password?.message === 'string' && errors?.password?.message}
-                                            </Signup_Error>
-                                        </Signup_Item_Container>
-                                    </Signup_Item_Wrapper>
+                                            </SignupError>
+                                        </SignupItemContainer>
+                                    </SignupItemWrapper>
                                     {/* 약관동의 */}
-                                    <Signup_Item_Wrapper>
-                                        <Contract_Container>
-                                            <Contract_Button_Container>
-                                                <Contract_Button_Input id="contract1" type="checkbox"  onClick={() => handleChecked(1)} />       
-                                                <Contract_Button_Svg_Container $isChecked={isChecked} $isError={isErrorChecked}>
+                                    <SignupItemWrapper>
+                                        <ContractContainer>
+                                            <ContractButtonContainer>
+                                                <ContractButtonInput id="contract1" type="checkbox"  onClick={() => handleChecked(1)} />       
+                                                <ContractButtonSvgContainer $isChecked={isChecked} $isError={isErrorChecked}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CheckmarkSmall" aria-hidden="true">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M13.4696 3.46973L14.5303 4.53039L6.53026 12.5304C6.23737 12.8233 5.7625 12.8233 5.4696 12.5304L1.4696 8.53039L2.53026 7.46973L5.99993 10.9394L13.4696 3.46973Z" fill="currentColor">
                                                         </path>
                                                     </svg>
-                                                </Contract_Button_Svg_Container> 
-                                            </Contract_Button_Container>
-                                            <Contract_Label htmlFor="contract1">
+                                                </ContractButtonSvgContainer> 
+                                            </ContractButtonContainer>
+                                            <ContractLabel htmlFor="contract1">
                                                 <span>
                                                     예, 저는 개인정보 처리방침에 따른 개인정보 수집 및 활용에 동의합니다. (필수 사항)
                                                 </span>
-                                            </Contract_Label>
-                                            <Contract_Error_Container $isError={isErrorChecked}>
+                                            </ContractLabel>
+                                            <ContractErrorContainer $isError={isErrorChecked}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="currentColor">
                                                     </path>
                                                 </svg>
                                                 먼저 이용 약관에 동의하셔야 합니다.
-                                            </Contract_Error_Container>
-                                        </Contract_Container>
-                                    </Signup_Item_Wrapper>
-                                    <Signup_Item_Wrapper>
-                                        <Contract_Container>
-                                            <Contract_Button_Container>
-                                                <Contract_Button_Input id="contract1" type="checkbox"  onClick={() => handleChecked(2)} />       
-                                                <Contract_Button_Svg_Container $isChecked={isChecked2}>
+                                            </ContractErrorContainer>
+                                        </ContractContainer>
+                                    </SignupItemWrapper>
+                                    <SignupItemWrapper>
+                                        <ContractContainer>
+                                            <ContractButtonContainer>
+                                                <ContractButtonInput id="contract1" type="checkbox"  onClick={() => handleChecked(2)} />       
+                                                <ContractButtonSvgContainer $isChecked={isChecked2}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CheckmarkSmall" aria-hidden="true">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M13.4696 3.46973L14.5303 4.53039L6.53026 12.5304C6.23737 12.8233 5.7625 12.8233 5.4696 12.5304L1.4696 8.53039L2.53026 7.46973L5.99993 10.9394L13.4696 3.46973Z" fill="currentColor">
                                                         </path>
                                                     </svg>
-                                                </Contract_Button_Svg_Container> 
-                                            </Contract_Button_Container>
-                                            <Contract_Label htmlFor="contract1">
+                                                </ContractButtonSvgContainer> 
+                                            </ContractButtonContainer>
+                                            <ContractLabel htmlFor="contract1">
                                                 <span>
                                                     예, 넷플릭스 특별 할인 알림 이메일을 보내주세요. (선택 사항)
                                                 </span>
-                                            </Contract_Label>
-                                        </Contract_Container>
-                                    </Signup_Item_Wrapper>
-                                </Signup_Items_Container>
+                                            </ContractLabel>
+                                        </ContractContainer>
+                                    </SignupItemWrapper>
+                                </SignupItemsContainer>
                             </div>
-                        </Signup_Form_Container> 
-                        <Signup_Button_Wrapper>
-                            <Signup_Button type="submit" onClick={() => handleNextStep(4)}>동의하고 계속</Signup_Button>                            
-                        </Signup_Button_Wrapper>       
-                    </Signup_Form>
-                </Sub_Body_Container2>
-            </Sub_Body_Wrapper>
-        </Sign_Container>
+                        </SignupFormContainer> 
+                        <SignupButtonWrapper>
+                            <SignupButton type="submit" onClick={() => handleNextStep(4)}>동의하고 계속</SignupButton>                            
+                        </SignupButtonWrapper>       
+                    </SignupForm>
+                </SubBodyContainer2>
+            </SubBodyWrapper>
+        </SignContainer>
     );
 }
 

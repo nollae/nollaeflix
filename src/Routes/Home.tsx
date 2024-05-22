@@ -1,9 +1,7 @@
-import { Link, useHistory, useRouteMatch } from 'react-router-dom'; 
+import { Link, useHistory } from 'react-router-dom'; 
 import { useState, useEffect } from 'react';
 
-import { motion, useAnimation, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion"; 
-
-import { useForm } from 'react-hook-form';
+import { motion, AnimatePresence } from "framer-motion"; 
 
 import styled from 'styled-components';
 
@@ -24,9 +22,9 @@ import { addFavoriteVideo,
         addVotedVideos, removeVotedVideos,
         addFavoriteVideoInfo, removeFavoriteVideoInfo
     } from '../atoms';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
-const Body_Container = styled.div<{$isOpen?:boolean}>`
+const BodyContainer = styled.div<{$isOpen?:boolean}>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -42,7 +40,7 @@ const Body_Container = styled.div<{$isOpen?:boolean}>`
     overflow: ${(props) => props.$isOpen ? "hidden" : "visible"};    
 `;
 
-const MainView_Wrapper = styled.div`
+const MainViewWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -57,7 +55,7 @@ const MainView_Wrapper = styled.div`
     z-index: 0;    
 `;
 
-const MainView_Container = styled.div`
+const MainViewContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -73,7 +71,7 @@ const MainView_Container = styled.div`
     margin-top: -70px;    
 `;
 
-const Main_Wrapper = styled.div`
+const MainWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -88,7 +86,7 @@ const Main_Wrapper = styled.div`
     z-index: 1;    
 `;
 
-const Main_Content_Wrapper = styled.div<{ $bgPhoto?: string }>`
+const MainContentWrapper = styled.div<{ $bgPhoto?: string }>`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -110,7 +108,7 @@ const Main_Content_Wrapper = styled.div<{ $bgPhoto?: string }>`
     url(${(props) => props.$bgPhoto}); */
 `;
 
-const Main_Content_Container = styled.div`
+const MainContentContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -127,7 +125,7 @@ const Main_Content_Container = styled.div`
     z-index: 0;    
 `;
 
-const Main_Cotent_Img_Wrapper = styled.div`
+const MainCotentImgWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -167,7 +165,7 @@ const Main_Cotent_Img_Wrapper = styled.div`
     }
 `;
 
-const Main_Info_Wrapper = styled.div`
+const MainInfoWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -186,7 +184,7 @@ const Main_Info_Wrapper = styled.div`
     top: 0;    
 `;
 
-const Main_Info_Layer = styled.div`
+const MainInfoLayer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -207,7 +205,7 @@ const Main_Info_Layer = styled.div`
     z-index: 10;
 `;
 
-const Main_Info_Container = styled.div`
+const MainInfoContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -221,7 +219,7 @@ const Main_Info_Container = styled.div`
     width: 100%;    
 `;
 
-const Main_Title_Wrapper = styled.div`
+const MainTitleWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -237,7 +235,7 @@ const Main_Title_Wrapper = styled.div`
     transition-delay: 0ms;    
 `;
 
-const Main_Title = styled.div`
+const MainTitle = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -258,7 +256,7 @@ const Main_Title = styled.div`
     /* background-color: rgba(0, 0, 0, 0.35); */
 `;
 
-const Main_Detail_Wrapper = styled.div`
+const MainDetailWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -275,7 +273,7 @@ const Main_Detail_Wrapper = styled.div`
     width: 36%;
 `;
 
-const Main_Detail = styled.div`
+const MainDetail = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     cursor: default;
@@ -291,7 +289,7 @@ const Main_Detail = styled.div`
     margin: .5vw 0 0;
 `;
 
-const Main_Button_Container = styled.div`
+const MainButtonContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -308,7 +306,7 @@ const Main_Button_Container = styled.div`
     white-space: nowrap;   
 `;
 
-const Main_Button_Wrapper = styled.a`
+const MainButtonWrapper = styled.a`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font-size: .85vw;
@@ -327,7 +325,7 @@ const Main_Button_Wrapper = styled.a`
     flex-shrink: 0;    
 `;
 
-const Main_Play_Button_Container = styled.button`
+const MainPlayButtonContainer = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -363,7 +361,7 @@ const Main_Play_Button_Container = styled.button`
     }
 `;
 
-const Play_Button_Svg_Wrapper = styled.div`
+const PlayButtonSvgWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -376,7 +374,7 @@ const Play_Button_Svg_Wrapper = styled.div`
     line-height: 0;
 `;
 
-const Play_Button_Svg = styled.div`
+const PlayButtonSvg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -412,7 +410,7 @@ const Play_Button_Svg = styled.div`
     }
 `;
 
-const Play_Gap = styled.div`
+const PlayGap = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -429,7 +427,7 @@ const Play_Gap = styled.div`
     width: 0.5rem;    
 `;
 
-const Play_Title = styled.span`
+const PlayTitle2 = styled.span`
     -webkit-text-size-adjust: 100%;
     font: inherit;
     text-transform: none;
@@ -445,7 +443,7 @@ const Play_Title = styled.span`
     line-height: 2rem;    
 `;
 
-const Detail_Button_Wrapper = styled.button`
+const DetailButtonWrapper = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -480,7 +478,7 @@ const Detail_Button_Wrapper = styled.button`
     }
 `;
 
-const Detail_Button_Svg_Wrapper = styled.div`
+const DetailButtonSvgWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -493,7 +491,7 @@ const Detail_Button_Svg_Wrapper = styled.div`
     line-height: 0;
 `;
 
-const Detail_Button_Svg = styled.div`
+const DetailButtonSvg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -529,7 +527,7 @@ const Detail_Button_Svg = styled.div`
     }    
 `;
 
-const Detail_Gap = styled.div`
+const DetailGap = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -546,7 +544,7 @@ const Detail_Gap = styled.div`
     width: 0.5rem; 
 `;
 
-const Detail_Title = styled.span`
+const DetailTitle = styled.span`
     -webkit-text-size-adjust: 100%;
     font: inherit;
     text-transform: none;
@@ -562,43 +560,43 @@ const Detail_Title = styled.span`
     line-height: 2rem;  
 `;
 
-const Detail_Backgound = styled.div<{$isOpen?:boolean}>`
-    /* display: ${(props) => props.$isOpen ? "" : "none"}; */
-    z-index: 99;
-    overflow-y: auto;
-    position: relative;
-    top: 0;
-    left: 0;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    color: #fff;
-    cursor: default;
-    user-select: none;
-    font-size: .85vw;
-    word-break: keep-all;
-    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
-    line-height: 1.4;
-    opacity: 0.7;   
-    div {
-        -webkit-text-size-adjust: 100%;
-        -webkit-font-smoothing: antialiased;
-        color: #fff;
-        cursor: default;
-        user-select: none;
-        font-size: .85vw;
-        word-break: keep-all;
-        font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
-        line-height: 1.4;
-        background-color: #000;
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-    } 
-`;
+// const DetailBackgound = styled.div<{$isOpen?:boolean}>`
+//     /* display: ${(props) => props.$isOpen ? "" : "none"}; */
+//     z-index: 99;
+//     overflow-y: auto;
+//     position: relative;
+//     top: 0;
+//     left: 0;
+//     -webkit-text-size-adjust: 100%;
+//     -webkit-font-smoothing: antialiased;
+//     color: #fff;
+//     cursor: default;
+//     user-select: none;
+//     font-size: .85vw;
+//     word-break: keep-all;
+//     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+//     line-height: 1.4;
+//     opacity: 0.7;   
+//     div {
+//         -webkit-text-size-adjust: 100%;
+//         -webkit-font-smoothing: antialiased;
+//         color: #fff;
+//         cursor: default;
+//         user-select: none;
+//         font-size: .85vw;
+//         word-break: keep-all;
+//         font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+//         line-height: 1.4;
+//         background-color: #000;
+//         height: 100%;
+//         left: 0;
+//         position: absolute;
+//         top: 0;
+//         width: 100%;
+//     } 
+// `;
 
-const Slide_Container = styled.div`
+const SlideContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -617,7 +615,7 @@ const Slide_Container = styled.div`
     padding: 0;    
 `;
 
-const Slide_Title_Wrapper = styled.h2`
+const SlideTitleWrapper = styled.h2`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -647,7 +645,7 @@ const Slide_Title_Wrapper = styled.h2`
     }
 `;
 
-const Slide_Title = styled.div`
+const SlideTitle = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -663,7 +661,7 @@ const Slide_Title = styled.div`
     text-shadow: 2px 2px 4px rgba(0, 0, 0, .45);
 `;
 
-const Slide_More_Container = styled.div`
+const SlideMoreContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -678,7 +676,7 @@ const Slide_More_Container = styled.div`
     vertical-align: bottom;    
 `;
 
-const Slide_More_Title = styled.div`
+const SlideMoreTitle = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -698,7 +696,7 @@ const Slide_More_Title = styled.div`
     color: #54b9c5;
 `;
 
-const Slide_Content_Wrapper = styled.div`
+const SlideContentWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -714,7 +712,7 @@ const Slide_Content_Wrapper = styled.div`
     /* height: 7.7rem; */
 `;
 
-const Slide_Layer_Wrapper = styled.div`
+const SlideLayerWrapper = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -729,7 +727,7 @@ const Slide_Layer_Wrapper = styled.div`
     /* height: 7.7rem; */
 `;
 
-const Slide_Content_Container = styled.div`
+const SlideContentContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -747,44 +745,44 @@ const Slide_Content_Container = styled.div`
     height: 7.7rem;
 `;
 
-const Pagination_Container = styled.ul`
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    color: #fff;
-    cursor: default;
-    user-select: none;
-    font-size: .85vw;
-    word-break: keep-all;
-    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
-    line-height: 1.4;
-    list-style-type: none;
-    margin: -24px 0 12px;
-    padding: 0;
-    position: absolute;
-    right: 4%;
-    top: 0;
-    display: block;
-`;
+// const PaginationContainer = styled.ul`
+//     -webkit-text-size-adjust: 100%;
+//     -webkit-font-smoothing: antialiased;
+//     color: #fff;
+//     cursor: default;
+//     user-select: none;
+//     font-size: .85vw;
+//     word-break: keep-all;
+//     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+//     line-height: 1.4;
+//     list-style-type: none;
+//     margin: -24px 0 12px;
+//     padding: 0;
+//     position: absolute;
+//     right: 4%;
+//     top: 0;
+//     display: block;
+// `;
 
-const Pagination = styled.li<{$isActive:boolean}>`
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    color: #fff;
-    cursor: default;
-    user-select: none;
-    font-size: .85vw;
-    word-break: keep-all;
-    font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
-    line-height: 1.4;
-    list-style-type: none;
-    display: inline-block;
-    height: 2px;
-    margin-left: 1px;
-    width: 12px;
-    background-color: ${(props) => props.$isActive ? "#aaa" : "#4d4d4d"};    
-`;
+// const Pagination = styled.li<{$isActive:boolean}>`
+//     -webkit-text-size-adjust: 100%;
+//     -webkit-font-smoothing: antialiased;
+//     color: #fff;
+//     cursor: default;
+//     user-select: none;
+//     font-size: .85vw;
+//     word-break: keep-all;
+//     font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+//     line-height: 1.4;
+//     list-style-type: none;
+//     display: inline-block;
+//     height: 2px;
+//     margin-left: 1px;
+//     width: 12px;
+//     background-color: ${(props) => props.$isActive ? "#aaa" : "#4d4d4d"};    
+// `;
 
-const Slider_Wrapper = styled(motion.div)`
+const SliderWrapper = styled(motion.div)`
     position: relative;
     width: 100%;
 
@@ -801,7 +799,7 @@ const Slider_Wrapper = styled(motion.div)`
     overflow-x: visible;
 `;
 
-const Slider_Container = styled(motion.div)`
+const SliderContainer = styled(motion.div)`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -818,7 +816,7 @@ const Slider_Container = styled(motion.div)`
     white-space: nowrap;    
 `;
 
-const Slider_Item_Wrapper = styled(motion.div)`
+const SliderItemWrapper = styled(motion.div)`
     width: 16.8%;
 
     -webkit-text-size-adjust: 100%;
@@ -848,7 +846,7 @@ const Slider_Item_Wrapper = styled(motion.div)`
     }
 `;
 
-const Slider_Item_Container = styled.div`
+const SliderItemContainer = styled.div`
     max-height: 140px;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -865,7 +863,7 @@ const Slider_Item_Container = styled.div`
     display: block;    
 `;
 
-const Slider_Item = styled.div`
+const SliderItem = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -882,7 +880,7 @@ const Slider_Item = styled.div`
     /* background-color: #181818;  */
 `;
 
-const Slider_Img_Container = styled.div`
+const SliderImgContainer = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -942,7 +940,7 @@ const Slider_Img_Container = styled.div`
     }
 `;
 
-const Slider_Img_Title = styled(motion.div)`
+const SliderImgTitle = styled(motion.div)`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -986,7 +984,7 @@ const Slider_Img_Title = styled(motion.div)`
     }
 `;
 
-const Slider_Next_Wrapper = styled.span`
+const SliderNextWrapper = styled.span`
     /* height: 12rem; */
     height: 100%;
 
@@ -1018,7 +1016,7 @@ const Slider_Next_Wrapper = styled.span`
     }
 `;
 
-const Sldier_Next_Img = styled.div`
+const SldierNextImg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -1059,7 +1057,7 @@ const Sldier_Next_Img = styled.div`
     }   
 `;
 
-const Content_Play_Wrapper = styled(motion.div)`
+const ContentPlayWrapper = styled(motion.div)`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     user-select: none;
@@ -1107,7 +1105,7 @@ const Content_Play_Wrapper = styled(motion.div)`
 `;
 
 
-const Control_Button_Container = styled(motion.div)`
+const ControlButtonContainer = styled(motion.div)`
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -1134,7 +1132,7 @@ const Control_Button_Container = styled(motion.div)`
     background-color: #181818;  
 `;
 
-const Main_Title_Wrapper_ = styled(motion.div)`
+const MainTitleWrapperVar = styled(motion.div)`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     color: #fff;
@@ -1155,7 +1153,7 @@ const Main_Title_Wrapper_ = styled(motion.div)`
     margin: 0;
 `;
 
-const Main_Title_ = styled.div`
+const MainTitleVar = styled.div`
     text-align: center;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -1178,7 +1176,7 @@ const Main_Title_ = styled.div`
     /* background-color: rgba(0, 0, 0, 0.35); */
 `;
 
-const Play_Button_Wrapper = styled.div`
+const PlayButtonWrapper = styled.div`
 
     position: absolute;
     left: 5%;
@@ -1198,7 +1196,7 @@ const Play_Button_Wrapper = styled.div`
     box-sizing: inherit;    
 `;
 
-const Play_Button_Container = styled.button`
+const PlayButtonContainer = styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -1235,7 +1233,7 @@ const Play_Button_Container = styled.button`
     }
 `;
 
-const Play_Button_Gap = styled.div`
+const PlayButtonGap = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -1252,7 +1250,7 @@ const Play_Button_Gap = styled.div`
     width: 0.5rem;    
 `;
 
-const Play_Title_ = styled.span`
+const PlayTitle = styled.span`
     -webkit-text-size-adjust: 100%;
     font: inherit;
     text-transform: none;
@@ -1269,7 +1267,7 @@ const Play_Title_ = styled.span`
     line-height: 1.4rem;    
 `;
 
-const Wish_Button_Wrapper = styled.div`
+const WishButtonWrapper = styled.div`
 
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -1297,7 +1295,7 @@ const Wish_Button_Wrapper = styled.div`
     }   
 `;
 
-const Wish_Button_Svg_Wrapper =styled.button`
+const WishButtonSvgWrapper =styled.button`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -1350,7 +1348,7 @@ const Wish_Button_Svg_Wrapper =styled.button`
     }    
 `;
 
-const Wish_Button_Svg = styled.div`
+const WishButtonSvg = styled.div`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     font: inherit;
@@ -1440,19 +1438,19 @@ function Home() {
     const history = useHistory();
 
     // main view : now playing 데이터 가져오기
-    const { data, isLoading } = useQuery<IGetMoviesResult>(
+    const { data } = useQuery<IGetMoviesResult>(
         ["movies", "nowPlaying"], 
         getMovies
     );
 
     // top rated 데이터 가져오기
-    const { data : top , isLoading : topLoading } = useQuery<IGetMoviesResult>(
+    const { data : top } = useQuery<IGetMoviesResult>(
         ["movies", "top"], 
         getMoviesTop
     );
 
     // popular 데이터 가져오기
-    const { data : popular , isLoading : popularLoading } = useQuery<IGetMoviesResult>(
+    const { data : popular } = useQuery<IGetMoviesResult>(
         ["movies", "popular"], 
         getMoviesPopular
     );
@@ -1464,7 +1462,7 @@ function Home() {
     }
 
     // upcoming 데이터 가져오기
-    const { data : upcoming , isLoading : upcomingLoading } = useQuery<IGetMoviesResult>(
+    const { data : upcoming } = useQuery<IGetMoviesResult>(
         ["movies", "upcoming"], 
         getMoviesUpcoming
     );
@@ -1485,7 +1483,7 @@ function Home() {
     }
 
      // 로그인 관리 
-     const [login, setLogin] = useRecoilState(loginState);
+     const login = useRecoilValue(loginState);
      const [user, setUser] = useRecoilState<IUser | null>(userState);
      useEffect(() => {
         if(user === null){
@@ -1496,7 +1494,7 @@ function Home() {
                 votedVideos: []
             }))
         }
-     }, []);
+     }, [login.email, setUser, user]);
 
 
     // slide 이벤트 관리
@@ -1651,10 +1649,10 @@ function Home() {
 
     // 관심있는 영화/TV 추가 이벤트
     const favList = user?.favoriteVideos;
-    const [addFav, setAddFav] = useRecoilState(addFavoriteVideo);
-    const [delFav, setDelFav] = useRecoilState(removeFavoriteVideo);
-    const [addFavInfo, setAddFavInfo] = useRecoilState(addFavoriteVideoInfo);
-    const [delFavInfo, setDelFavInfo] = useRecoilState(removeFavoriteVideoInfo);
+    const setAddFav = useSetRecoilState(addFavoriteVideo);
+    const setDelFav = useSetRecoilState(removeFavoriteVideo);
+    const setAddFavInfo = useSetRecoilState(addFavoriteVideoInfo);
+    const setDelFavInfo = useSetRecoilState(removeFavoriteVideoInfo);
     
     const handleFavVideo = (
         movieId?: number, 
@@ -1683,8 +1681,8 @@ function Home() {
 
     // 좋아요 투표한 영화/TV 추가 이벤트
     const votedList = user?.votedVideos;
-    const [addVoted, setAddVoted] = useRecoilState(addVotedVideos);
-    const [delVoted, setDelVoted] = useRecoilState(removeVotedVideos);
+    const setAddVoted = useSetRecoilState(addVotedVideos);
+    const setDelVoted = useSetRecoilState(removeVotedVideos);
     const handleVotedVideo = (movieId?: number) => {
         if (movieId !== undefined && movieId !== null){
             if(votedList?.includes(movieId)){
@@ -1696,122 +1694,122 @@ function Home() {
     }
 
     return (
-        <Body_Container $isOpen={isOpenMainDetail}>
+        <BodyContainer $isOpen={isOpenMainDetail}>
             {/* Header */}
             <MainHeader />
             {/* MainView */}
-            <MainView_Wrapper>
-                <MainView_Container>
+            <MainViewWrapper>
+                <MainViewContainer>
                     {/* main content */}
-                    <Main_Wrapper>
-                        <Main_Content_Wrapper>
-                            <Main_Content_Container>
-                                <Main_Cotent_Img_Wrapper>
-                                    <img src={makeImagePath(data?.results[0].backdrop_path || "")} />
-                                </Main_Cotent_Img_Wrapper>
-                                <Main_Info_Wrapper>
-                                    <Main_Info_Layer>
-                                        <Main_Info_Container>
+                    <MainWrapper>
+                        <MainContentWrapper>
+                            <MainContentContainer>
+                                <MainCotentImgWrapper>
+                                    <img src={makeImagePath(data?.results[0].backdrop_path || "")} alt='' />
+                                </MainCotentImgWrapper>
+                                <MainInfoWrapper>
+                                    <MainInfoLayer>
+                                        <MainInfoContainer>
                                             {/* Title */}
-                                            <Main_Title_Wrapper>
-                                                <Main_Title>
+                                            <MainTitleWrapper>
+                                                <MainTitle>
                                                     {data?.results[0].title}
-                                                </Main_Title>
-                                            </Main_Title_Wrapper>
+                                                </MainTitle>
+                                            </MainTitleWrapper>
                                             {/* Info : Detail */}
-                                            <Main_Detail_Wrapper>
-                                                <Main_Detail>
+                                            <MainDetailWrapper>
+                                                <MainDetail>
                                                     {data?.results[0].overview}
-                                                </Main_Detail>
-                                            </Main_Detail_Wrapper>
-                                            <Main_Button_Container>
+                                                </MainDetail>
+                                            </MainDetailWrapper>
+                                            <MainButtonContainer>
                                                 {/* 재생 */}
-                                                <Main_Button_Wrapper>
-                                                    <Main_Play_Button_Container>
-                                                        <Play_Button_Svg_Wrapper>
-                                                            <Play_Button_Svg>
+                                                <MainButtonWrapper>
+                                                    <MainPlayButtonContainer>
+                                                        <PlayButtonSvgWrapper>
+                                                            <PlayButtonSvg>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="PlayStandard" aria-hidden="true">
                                                                     <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                     </path>
                                                                 </svg>
-                                                            </Play_Button_Svg> 
-                                                        </Play_Button_Svg_Wrapper>
-                                                        <Play_Gap />
-                                                        <Play_Title>재생</Play_Title>
-                                                    </Main_Play_Button_Container>
-                                                </Main_Button_Wrapper>
+                                                            </PlayButtonSvg> 
+                                                        </PlayButtonSvgWrapper>
+                                                        <PlayGap />
+                                                        <PlayTitle2>재생</PlayTitle2>
+                                                    </MainPlayButtonContainer>
+                                                </MainButtonWrapper>
                                                 {/* 상세 정보 */}
-                                                <Detail_Button_Wrapper onClick={() => handleDetailInfo(data?.results[0].id, data?.results[0].title)}>
-                                                    <Detail_Button_Svg_Wrapper>
-                                                        <Detail_Button_Svg>
+                                                <DetailButtonWrapper onClick={() => handleDetailInfo(data?.results[0].id, data?.results[0].title)}>
+                                                    <DetailButtonSvgWrapper>
+                                                        <DetailButtonSvg>
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                 <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                 </path>
                                                             </svg>
-                                                        </Detail_Button_Svg> 
-                                                    </Detail_Button_Svg_Wrapper>
-                                                    <Detail_Gap />
-                                                    <Detail_Title>상세 정보</Detail_Title>
-                                                </Detail_Button_Wrapper>
-                                            </Main_Button_Container>
-                                        </Main_Info_Container>
-                                    </Main_Info_Layer>            
-                                </Main_Info_Wrapper>
-                            </Main_Content_Container>
-                        </Main_Content_Wrapper>                       
-                    </Main_Wrapper>    
+                                                        </DetailButtonSvg> 
+                                                    </DetailButtonSvgWrapper>
+                                                    <DetailGap />
+                                                    <DetailTitle>상세 정보</DetailTitle>
+                                                </DetailButtonWrapper>
+                                            </MainButtonContainer>
+                                        </MainInfoContainer>
+                                    </MainInfoLayer>            
+                                </MainInfoWrapper>
+                            </MainContentContainer>
+                        </MainContentWrapper>                       
+                    </MainWrapper>    
                     {/* slider content : now playing */}
-                    <Slide_Container
+                    <SlideContainer
                         style={{
                             // marginTop: "0",
                         }}
                     >
                         {/* title */}
-                        <Slide_Title_Wrapper>
+                        <SlideTitleWrapper>
                             <Link to="#">
                                 {/* title */}
-                                <Slide_Title>
+                                <SlideTitle>
                                     지금 상영중인 영화
-                                </Slide_Title>          
+                                </SlideTitle>          
                                   {/* more */}  
-                                <Slide_More_Container>
-                                    <Slide_More_Title>모두 보기</Slide_More_Title>
-                                </Slide_More_Container>
+                                <SlideMoreContainer>
+                                    <SlideMoreTitle>모두 보기</SlideMoreTitle>
+                                </SlideMoreContainer>
                             </Link>
-                        </Slide_Title_Wrapper>
+                        </SlideTitleWrapper>
                         {/* content */}
-                        <Slide_Content_Wrapper>
+                        <SlideContentWrapper>
                             <div>
-                                <Slide_Layer_Wrapper>
-                                    <Slide_Content_Container>
+                                <SlideLayerWrapper>
+                                    <SlideContentContainer>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={decreaseIndex}
                                             style={{left:0}}
                                         >
-                                            <Sldier_Next_Img>
+                                            <SldierNextImg>
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
                                         {/* pagination */}
-                                        {/* <Pagination_Container>
+                                        {/* <PaginationContainer>
                                             <Pagination $isActive={true}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
-                                        </Pagination_Container> */}
+                                        </PaginationContainer> */}
                                         {/* slider */}
-                                        <Slider_Wrapper>
+                                        <SliderWrapper>
                                             <AnimatePresence
                                                 initial={false}
                                                 onExitComplete={handleLeaving}
                                                 // mode="wait"
                                                 custom={isBack}
                                                 >
-                                                <Slider_Container
+                                                <SliderContainer
                                                     custom={isBack}
                                                     variants={rowVariants} 
                                                     initial="hidden"
@@ -1827,7 +1825,7 @@ function Home() {
                                                         .slice(offset*index, offset*index + offset)
                                                         .map((movie) => (
                                                             
-                                                            <Slider_Item_Wrapper
+                                                            <SliderItemWrapper
                                                                 layoutId={movie.id + ""}
                                                                 key={movie.id} 
                                                                 whileHover="hover"
@@ -1838,16 +1836,16 @@ function Home() {
                                                                 transition={{ type: "tween" }}
                                                             >
                                                                 {/* <div> */}
-                                                                    <Slider_Item_Container>
+                                                                    <SliderItemContainer>
                                                                         {/* <div> */}
-                                                                            <Slider_Item>
-                                                                                <Slider_Img_Container onClick={() => handleDetailInfo(movie.id, movie.title)}>
+                                                                            <SliderItem>
+                                                                                <SliderImgContainer onClick={() => handleDetailInfo(movie.id, movie.title)}>
                                                                                     {/* img */}
                                                                                     <img 
                                                                                         decoding="async"
                                                                                         src={makeImagePath(movie.backdrop_path || movie.poster_path, "w500")} alt="" />
                                                                                     {/* title */}
-                                                                                    <Content_Play_Wrapper variants={infoVariants}>
+                                                                                    <ContentPlayWrapper variants={infoVariants}>
                                                                                         <svg 
                                                                                             style={{
                                                                                                 position: "relative",
@@ -1859,46 +1857,46 @@ function Home() {
                                                                                             <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                                             </path>
                                                                                         </svg>
-                                                                                    </Content_Play_Wrapper>
-                                                                                    <Slider_Img_Title>
+                                                                                    </ContentPlayWrapper>
+                                                                                    <SliderImgTitle>
                                                                                         <p>{movie.title}</p>
-                                                                                    </Slider_Img_Title>
-                                                                                </Slider_Img_Container>   
-                                                                                {/* <Main_Title_Wrapper_ variants={infoVariants}>
-                                                                                    <Main_Title_>
+                                                                                    </SliderImgTitle>
+                                                                                </SliderImgContainer>   
+                                                                                {/* <MainTitleWrapperVar variants={infoVariants}>
+                                                                                    <MainTitle>
                                                                                         {movie.title}
-                                                                                    </Main_Title_>
-                                                                                </Main_Title_Wrapper_> */}
-                                                                                <Control_Button_Container variants={infoVariants}>
+                                                                                    </MainTitle>
+                                                                                </MainTitleWrapperVar> */}
+                                                                                <ControlButtonContainer variants={infoVariants}>
                                                                                     {/* 재생 */}
-                                                                                    <Play_Button_Wrapper>
-                                                                                        <Play_Button_Container>
-                                                                                            <Play_Button_Svg_Wrapper>
-                                                                                                <Play_Button_Svg>
+                                                                                    <PlayButtonWrapper>
+                                                                                        <PlayButtonContainer>
+                                                                                            <PlayButtonSvgWrapper>
+                                                                                                <PlayButtonSvg>
                                                                                                     <svg 
                                                                                                         style={{color: "white"}}
                                                                                                         xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                                                         <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                                                         </path>
                                                                                                     </svg>
-                                                                                                </Play_Button_Svg>
-                                                                                            </Play_Button_Svg_Wrapper>
-                                                                                            <Play_Button_Gap />
-                                                                                            <Play_Title 
+                                                                                                </PlayButtonSvg>
+                                                                                            </PlayButtonSvgWrapper>
+                                                                                            <PlayButtonGap />
+                                                                                            <PlayTitle 
                                                                                                 onClick={() => handleDetailInfo(movie.id, movie.title)}
-                                                                                                style={{color: "white"}}>상세 정보</Play_Title>
-                                                                                        </Play_Button_Container>
-                                                                                    </Play_Button_Wrapper>
+                                                                                                style={{color: "white"}}>상세 정보</PlayTitle>
+                                                                                        </PlayButtonContainer>
+                                                                                    </PlayButtonWrapper>
 
                                                                                     {/* 관심 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "20%",
                                                                                         }}
                                                                                         onClick={() => handleFavVideo(movie?.id, movie?.title, movie?.backdrop_path, movie?.poster_path, "")} key={"wish"} >
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not wish */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? favList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -1913,18 +1911,18 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
                                                                                     {/* 좋아요 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "2%",
                                                                                         }}
                                                                                         onClick={() => handleVotedVideo(movie?.id)}  key={"like"}>
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not like */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? votedList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -1939,89 +1937,89 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M13.407 6.25579L13.313 5.50407C13.1342 4.07353 11.9181 3 10.4764 3C10.2133 3 10 3.21331 10 3.47644V6.7132C10 6.90062 9.94733 7.08427 9.848 7.2432L7.90742 10.3481C7.64516 10.7677 7.23665 11.0752 6.76086 11.2112L4.72528 11.7928C4.29598 11.9154 4 12.3078 4 12.7543V18.3161C4 18.6938 4.30618 19 4.68387 19C5.874 19 7.04352 19.3106 8.07684 19.9011L8.25 20C9.39679 20.6553 10.6947 21 12.0156 21H13H16H16.5C17.3284 21 18 20.3284 18 19.5C18 19.1158 17.8556 18.7654 17.6181 18.5H18C18.8284 18.5 19.5 17.8284 19.5 17C19.5 16.4601 19.2147 15.9868 18.7867 15.7226C19.478 15.5888 20 14.9804 20 14.25C20 13.4216 19.3284 12.75 18.5 12.75H18.3294C18.7336 12.4813 19 12.0217 19 11.5C19 10.6716 18.3284 10 17.5 10H13.125L13.407 7.74421C13.4688 7.24999 13.4688 6.75001 13.407 6.25579Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
 
-                                                                                </Control_Button_Container>
-                                                                            </Slider_Item>
+                                                                                </ControlButtonContainer>
+                                                                            </SliderItem>
 
                                                                         {/* </div> */}
                                                                         {/* <div></div> */}
-                                                                    </Slider_Item_Container>
+                                                                    </SliderItemContainer>
                                                                 {/* </div> */}
 
-                                                            </Slider_Item_Wrapper>
+                                                            </SliderItemWrapper>
                                                             
                                                         ))
                                                     }
 
-                                                </Slider_Container>
+                                                </SliderContainer>
                                             </AnimatePresence>
-                                        </Slider_Wrapper>
+                                        </SliderWrapper>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={increaseIndex}
                                             style={{right:0}}
                                         >
-                                            <Sldier_Next_Img style={{transform: "rotate(-180deg)"}} >
+                                            <SldierNextImg style={{transform: "rotate(-180deg)"}} >
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
-                                    </Slide_Content_Container>
-                                </Slide_Layer_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
+                                    </SlideContentContainer>
+                                </SlideLayerWrapper>
                             </div>
-                        </Slide_Content_Wrapper>
-                    </Slide_Container>
+                        </SlideContentWrapper>
+                    </SlideContainer>
                     {/* slider content : popular */}
-                    <Slide_Container
+                    <SlideContainer
                         style={{
                             marginTop: "0",
                             // marginBottom: "0"
                         }}
                     >
                         {/* title */}
-                        <Slide_Title_Wrapper>
+                        <SlideTitleWrapper>
                             <Link to="#">
                                 {/* title */}
-                                <Slide_Title>
+                                <SlideTitle>
                                     요즘 Top 10 영화 
-                                </Slide_Title>          
+                                </SlideTitle>          
                                   {/* more */}  
-                                <Slide_More_Container>
-                                    <Slide_More_Title>모두 보기</Slide_More_Title>
-                                </Slide_More_Container>
+                                <SlideMoreContainer>
+                                    <SlideMoreTitle>모두 보기</SlideMoreTitle>
+                                </SlideMoreContainer>
                             </Link>
-                        </Slide_Title_Wrapper>
+                        </SlideTitleWrapper>
                         {/* content */}
-                        <Slide_Content_Wrapper>
+                        <SlideContentWrapper>
                             <div>
-                                <Slide_Layer_Wrapper>
-                                    <Slide_Content_Container>
+                                <SlideLayerWrapper>
+                                    <SlideContentContainer>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={decreaseIndexTop}
                                             style={{left:0}}
                                         >
-                                            <Sldier_Next_Img>
+                                            <SldierNextImg>
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
                                         {/* slider */}
-                                        <Slider_Wrapper>
+                                        <SliderWrapper>
                                             <AnimatePresence
                                                 initial={false}
                                                 onExitComplete={handleLeavingTop}
                                                 // mode="wait"
                                                 custom={isBackTop}
                                                 >
-                                                <Slider_Container
+                                                <SliderContainer
                                                     custom={isBackTop}
                                                     variants={rowVariants} 
                                                     initial="hidden"
@@ -2037,12 +2035,12 @@ function Home() {
                                                         .slice(offsetTop*indexTop, offsetTop*indexTop + offsetTop)
                                                         .map((movie) => (
                                                             
-                                                            <Slider_Item_Wrapper
+                                                            <SliderItemWrapper
                                                                 style={{
                                                                     width: "20.1%",
                                                                 }}
-                                                                layoutId={movie.id + "_pouplar"}
-                                                                key={movie.id + "_pouplar"} 
+                                                                layoutId={movie.id + "pouplar"}
+                                                                key={movie.id + "pouplar"} 
                                                                 whileHover="hover"
                                                                 initial="normal"
                                                                 variants={boxVariants}
@@ -2051,10 +2049,10 @@ function Home() {
                                                                 transition={{ type: "tween" }}
                                                             >
                                                                 {/* <div> */}
-                                                                    <Slider_Item_Container>
+                                                                    <SliderItemContainer>
                                                                         {/* <div> */}
-                                                                            <Slider_Item>
-                                                                                <Slider_Img_Container  
+                                                                            <SliderItem>
+                                                                                <SliderImgContainer  
                                                                                     onClick={() => handleDetailInfo(movie.id, movie.title)}
                                                                                 >
                                                                                     {
@@ -2141,51 +2139,51 @@ function Home() {
                                                                                         decoding="async"
                                                                                         src={makeImagePath(movie.poster_path || movie.poster_path, "w300")} alt="" />
                                                                                     {/* title */}
-                                                                                    {/* <Content_Play_Wrapper variants={infoVariants}>
+                                                                                    {/* <ContentPlayWrapper variants={infoVariants}>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="PlayStandard" aria-hidden="true">
                                                                                             <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                                             </path>
                                                                                         </svg>
-                                                                                    </Content_Play_Wrapper> */}
-                                                                                    {/* <Slider_Img_Title>
+                                                                                    </ContentPlayWrapper> */}
+                                                                                    {/* <SliderImgTitle>
                                                                                         <p>{movie.title}</p>
-                                                                                    </Slider_Img_Title> */}
-                                                                                </Slider_Img_Container>   
-                                                                                <Main_Title_Wrapper_ variants={infoVariants}>
-                                                                                    <Main_Title_>
+                                                                                    </SliderImgTitle> */}
+                                                                                </SliderImgContainer>   
+                                                                                <MainTitleWrapperVar variants={infoVariants}>
+                                                                                    <MainTitleVar>
                                                                                         {movie.title}
-                                                                                    </Main_Title_>
-                                                                                </Main_Title_Wrapper_>
-                                                                                <Control_Button_Container variants={infoVariants}>
+                                                                                    </MainTitleVar>
+                                                                                </MainTitleWrapperVar>
+                                                                                <ControlButtonContainer variants={infoVariants}>
                                                                                     {/* 재생 */}
-                                                                                    <Play_Button_Wrapper>
-                                                                                        <Play_Button_Container>
-                                                                                            <Play_Button_Svg_Wrapper>
-                                                                                                <Play_Button_Svg>
+                                                                                    <PlayButtonWrapper>
+                                                                                        <PlayButtonContainer>
+                                                                                            <PlayButtonSvgWrapper>
+                                                                                                <PlayButtonSvg>
                                                                                                     <svg 
                                                                                                         style={{color: "white"}}
                                                                                                         xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                                                         <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                                                         </path>
                                                                                                     </svg>
-                                                                                                </Play_Button_Svg>
-                                                                                            </Play_Button_Svg_Wrapper>
-                                                                                            <Play_Button_Gap />
-                                                                                            <Play_Title 
+                                                                                                </PlayButtonSvg>
+                                                                                            </PlayButtonSvgWrapper>
+                                                                                            <PlayButtonGap />
+                                                                                            <PlayTitle 
                                                                                                 onClick={() => handleDetailInfo(movie.id, movie.title)}
-                                                                                                style={{color: "white"}}>상세 정보</Play_Title>
-                                                                                        </Play_Button_Container>
-                                                                                    </Play_Button_Wrapper>
+                                                                                                style={{color: "white"}}>상세 정보</PlayTitle>
+                                                                                        </PlayButtonContainer>
+                                                                                    </PlayButtonWrapper>
 
                                                                                     {/* 관심 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "20%",
                                                                                         }}
                                                                                         onClick={() => handleFavVideo(movie?.id, movie?.title, movie?.backdrop_path, movie?.poster_path, "")} key={"wish"} >
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not wish */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? favList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -2200,18 +2198,18 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
                                                                                     {/* 좋아요 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "2%",
                                                                                         }}
                                                                                         onClick={() => handleVotedVideo(movie?.id)}  key={"like"}>
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not like */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? votedList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -2226,96 +2224,96 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M13.407 6.25579L13.313 5.50407C13.1342 4.07353 11.9181 3 10.4764 3C10.2133 3 10 3.21331 10 3.47644V6.7132C10 6.90062 9.94733 7.08427 9.848 7.2432L7.90742 10.3481C7.64516 10.7677 7.23665 11.0752 6.76086 11.2112L4.72528 11.7928C4.29598 11.9154 4 12.3078 4 12.7543V18.3161C4 18.6938 4.30618 19 4.68387 19C5.874 19 7.04352 19.3106 8.07684 19.9011L8.25 20C9.39679 20.6553 10.6947 21 12.0156 21H13H16H16.5C17.3284 21 18 20.3284 18 19.5C18 19.1158 17.8556 18.7654 17.6181 18.5H18C18.8284 18.5 19.5 17.8284 19.5 17C19.5 16.4601 19.2147 15.9868 18.7867 15.7226C19.478 15.5888 20 14.9804 20 14.25C20 13.4216 19.3284 12.75 18.5 12.75H18.3294C18.7336 12.4813 19 12.0217 19 11.5C19 10.6716 18.3284 10 17.5 10H13.125L13.407 7.74421C13.4688 7.24999 13.4688 6.75001 13.407 6.25579Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
 
-                                                                                </Control_Button_Container>
-                                                                            </Slider_Item>
+                                                                                </ControlButtonContainer>
+                                                                            </SliderItem>
 
                                                                         {/* </div> */}
                                                                         {/* <div></div> */}
-                                                                    </Slider_Item_Container>
+                                                                    </SliderItemContainer>
                                                                 {/* </div> */}
 
-                                                            </Slider_Item_Wrapper>
+                                                            </SliderItemWrapper>
                                                             
                                                         ))
                                                     }
 
-                                                </Slider_Container>
+                                                </SliderContainer>
                                             </AnimatePresence>
-                                        </Slider_Wrapper>
+                                        </SliderWrapper>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={increaseIndexTop}
                                             style={{right:0}}
                                         >
-                                            <Sldier_Next_Img style={{transform: "rotate(-180deg)"}} >
+                                            <SldierNextImg style={{transform: "rotate(-180deg)"}} >
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
-                                    </Slide_Content_Container>
-                                </Slide_Layer_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
+                                    </SlideContentContainer>
+                                </SlideLayerWrapper>
                             </div>
-                        </Slide_Content_Wrapper>
-                    </Slide_Container>
+                        </SlideContentWrapper>
+                    </SlideContainer>
                     {/* slider content : top rated */}
-                    <Slide_Container
+                    <SlideContainer
                         style={{
                             marginTop: "0",
                             // marginBottom: "0"
                         }}
                     >
                         {/* title */}
-                        <Slide_Title_Wrapper>
+                        <SlideTitleWrapper>
                             <Link to="#">
                                 {/* title */}
-                                <Slide_Title>
+                                <SlideTitle>
                                     평단의 찬사를 받은 시리즈
-                                </Slide_Title>          
+                                </SlideTitle>          
                                   {/* more */}  
-                                <Slide_More_Container>
-                                    <Slide_More_Title>모두 보기</Slide_More_Title>
-                                </Slide_More_Container>
+                                <SlideMoreContainer>
+                                    <SlideMoreTitle>모두 보기</SlideMoreTitle>
+                                </SlideMoreContainer>
                             </Link>
-                        </Slide_Title_Wrapper>
+                        </SlideTitleWrapper>
                         {/* content */}
-                        <Slide_Content_Wrapper>
+                        <SlideContentWrapper>
                             <div>
-                                <Slide_Layer_Wrapper>
-                                    <Slide_Content_Container>
+                                <SlideLayerWrapper>
+                                    <SlideContentContainer>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={decreaseIndexRate}
                                             style={{left:0}}
                                         >
-                                            <Sldier_Next_Img>
+                                            <SldierNextImg>
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
                                         {/* pagination */}
-                                        {/* <Pagination_Container>
+                                        {/* <PaginationContainer>
                                             <Pagination $isActive={true}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
-                                        </Pagination_Container> */}
+                                        </PaginationContainer> */}
                                         {/* slider */}
-                                        <Slider_Wrapper>
+                                        <SliderWrapper>
                                             <AnimatePresence
                                                 initial={false}
                                                 onExitComplete={handleLeavingRate}
                                                 // mode="wait"
                                                 custom={isBackRate}
                                                 >
-                                                <Slider_Container
+                                                <SliderContainer
                                                     custom={isBackRate}
                                                     variants={rowVariants} 
                                                     initial="hidden"
@@ -2331,9 +2329,9 @@ function Home() {
                                                         .slice(offset*indexRate, offset*indexRate + offset)
                                                         .map((top) => (
                                                             
-                                                            <Slider_Item_Wrapper
-                                                                layoutId={top.id + "_rated"}
-                                                                key={top.id + "_rated"} 
+                                                            <SliderItemWrapper
+                                                                layoutId={top.id + "rated"}
+                                                                key={top.id + "rated"} 
                                                                 whileHover="hover"
                                                                 initial="normal"
                                                                 variants={boxVariants}
@@ -2342,16 +2340,16 @@ function Home() {
                                                                 transition={{ type: "tween" }}
                                                             >
                                                                 {/* <div> */}
-                                                                    <Slider_Item_Container>
+                                                                    <SliderItemContainer>
                                                                         {/* <div> */}
-                                                                            <Slider_Item>
-                                                                                <Slider_Img_Container onClick={() => handleDetailInfo(top.id, top.title)}>
+                                                                            <SliderItem>
+                                                                                <SliderImgContainer onClick={() => handleDetailInfo(top.id, top.title)}>
                                                                                     {/* img */}
                                                                                     <img 
                                                                                         decoding="async"
                                                                                         src={makeImagePath(top.backdrop_path || top.poster_path, "w500")} alt="" />
                                                                                     {/* title */}
-                                                                                    <Content_Play_Wrapper variants={infoVariants}>
+                                                                                    <ContentPlayWrapper variants={infoVariants}>
                                                                                         <svg 
                                                                                             style={{
                                                                                                 position: "relative",
@@ -2363,46 +2361,46 @@ function Home() {
                                                                                             <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                                             </path>
                                                                                         </svg>
-                                                                                    </Content_Play_Wrapper>
-                                                                                    <Slider_Img_Title>
+                                                                                    </ContentPlayWrapper>
+                                                                                    <SliderImgTitle>
                                                                                         <p>{top.title}</p>
-                                                                                    </Slider_Img_Title>
-                                                                                </Slider_Img_Container>   
-                                                                                {/* <Main_Title_Wrapper_ variants={infoVariants}>
-                                                                                    <Main_Title_>
+                                                                                    </SliderImgTitle>
+                                                                                </SliderImgContainer>   
+                                                                                {/* <MainTitleWrapperVar variants={infoVariants}>
+                                                                                    <MainTitleVar>
                                                                                         {movie.title}
-                                                                                    </Main_Title_>
-                                                                                </Main_Title_Wrapper_> */}
-                                                                                <Control_Button_Container variants={infoVariants}>
+                                                                                    </MainTitleVar>
+                                                                                </MainTitleWrapperVar> */}
+                                                                                <ControlButtonContainer variants={infoVariants}>
                                                                                     {/* 재생 */}
-                                                                                    <Play_Button_Wrapper>
-                                                                                        <Play_Button_Container>
-                                                                                            <Play_Button_Svg_Wrapper>
-                                                                                                <Play_Button_Svg>
+                                                                                    <PlayButtonWrapper>
+                                                                                        <PlayButtonContainer>
+                                                                                            <PlayButtonSvgWrapper>
+                                                                                                <PlayButtonSvg>
                                                                                                     <svg 
                                                                                                         style={{color: "white"}}
                                                                                                         xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                                                         <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                                                         </path>
                                                                                                     </svg>
-                                                                                                </Play_Button_Svg>
-                                                                                            </Play_Button_Svg_Wrapper>
-                                                                                            <Play_Button_Gap />
-                                                                                            <Play_Title 
+                                                                                                </PlayButtonSvg>
+                                                                                            </PlayButtonSvgWrapper>
+                                                                                            <PlayButtonGap />
+                                                                                            <PlayTitle 
                                                                                                 onClick={() => handleDetailInfo(top.id, top.title)}
-                                                                                                style={{color: "white"}}>상세 정보</Play_Title>
-                                                                                        </Play_Button_Container>
-                                                                                    </Play_Button_Wrapper>
+                                                                                                style={{color: "white"}}>상세 정보</PlayTitle>
+                                                                                        </PlayButtonContainer>
+                                                                                    </PlayButtonWrapper>
 
                                                                                     {/* 관심 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "20%",
                                                                                         }}
                                                                                         onClick={() => handleFavVideo(top?.id, top?.title, top?.backdrop_path, top?.poster_path, "")} key={"wish"} >
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not wish */}
                                                                                                 <svg 
                                                                                                     style={{display: top?.id !== undefined ? favList?.includes(top?.id) ? "none" : "" : ""}}
@@ -2417,18 +2415,18 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
                                                                                     {/* 좋아요 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "2%",
                                                                                         }}
                                                                                         onClick={() => handleVotedVideo(top?.id)}  key={"like"}>
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not like */}
                                                                                                 <svg 
                                                                                                     style={{display: top?.id !== undefined ? votedList?.includes(top?.id) ? "none" : "" : ""}}
@@ -2443,96 +2441,96 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M13.407 6.25579L13.313 5.50407C13.1342 4.07353 11.9181 3 10.4764 3C10.2133 3 10 3.21331 10 3.47644V6.7132C10 6.90062 9.94733 7.08427 9.848 7.2432L7.90742 10.3481C7.64516 10.7677 7.23665 11.0752 6.76086 11.2112L4.72528 11.7928C4.29598 11.9154 4 12.3078 4 12.7543V18.3161C4 18.6938 4.30618 19 4.68387 19C5.874 19 7.04352 19.3106 8.07684 19.9011L8.25 20C9.39679 20.6553 10.6947 21 12.0156 21H13H16H16.5C17.3284 21 18 20.3284 18 19.5C18 19.1158 17.8556 18.7654 17.6181 18.5H18C18.8284 18.5 19.5 17.8284 19.5 17C19.5 16.4601 19.2147 15.9868 18.7867 15.7226C19.478 15.5888 20 14.9804 20 14.25C20 13.4216 19.3284 12.75 18.5 12.75H18.3294C18.7336 12.4813 19 12.0217 19 11.5C19 10.6716 18.3284 10 17.5 10H13.125L13.407 7.74421C13.4688 7.24999 13.4688 6.75001 13.407 6.25579Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
 
-                                                                                </Control_Button_Container>
-                                                                            </Slider_Item>
+                                                                                </ControlButtonContainer>
+                                                                            </SliderItem>
 
                                                                         {/* </div> */}
                                                                         {/* <div></div> */}
-                                                                    </Slider_Item_Container>
+                                                                    </SliderItemContainer>
                                                                 {/* </div> */}
 
-                                                            </Slider_Item_Wrapper>
+                                                            </SliderItemWrapper>
                                                             
                                                         ))
                                                     }
 
-                                                </Slider_Container>
+                                                </SliderContainer>
                                             </AnimatePresence>
-                                        </Slider_Wrapper>
+                                        </SliderWrapper>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={increaseIndexRate}
                                             style={{right:0}}
                                         >
-                                            <Sldier_Next_Img style={{transform: "rotate(-180deg)"}} >
+                                            <SldierNextImg style={{transform: "rotate(-180deg)"}} >
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
-                                    </Slide_Content_Container>
-                                </Slide_Layer_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
+                                    </SlideContentContainer>
+                                </SlideLayerWrapper>
                             </div>
-                        </Slide_Content_Wrapper>
-                    </Slide_Container>
+                        </SlideContentWrapper>
+                    </SlideContainer>
                     {/* slider content : upcoming */}
-                    <Slide_Container
+                    <SlideContainer
                         style={{
                             marginTop: "0",
                             // marginBottom: "0"
                         }}
                     >
                         {/* title */}
-                        <Slide_Title_Wrapper>
+                        <SlideTitleWrapper>
                             <Link to="#">
                                 {/* title */}
-                                <Slide_Title>
+                                <SlideTitle>
                                     곧 개봉할 영화
-                                </Slide_Title>          
+                                </SlideTitle>          
                                   {/* more */}  
-                                <Slide_More_Container>
-                                    <Slide_More_Title>모두 보기</Slide_More_Title>
-                                </Slide_More_Container>
+                                <SlideMoreContainer>
+                                    <SlideMoreTitle>모두 보기</SlideMoreTitle>
+                                </SlideMoreContainer>
                             </Link>
-                        </Slide_Title_Wrapper>
+                        </SlideTitleWrapper>
                         {/* content */}
-                        <Slide_Content_Wrapper>
+                        <SlideContentWrapper>
                             <div>
-                                <Slide_Layer_Wrapper>
-                                    <Slide_Content_Container>
+                                <SlideLayerWrapper>
+                                    <SlideContentContainer>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={decreaseIndexUpcoming}
                                             style={{left:0}}
                                         >
-                                            <Sldier_Next_Img>
+                                            <SldierNextImg>
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
                                         {/* pagination */}
-                                        {/* <Pagination_Container>
+                                        {/* <PaginationContainer>
                                             <Pagination $isActive={true}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
                                             <Pagination $isActive={false}></Pagination>
-                                        </Pagination_Container> */}
+                                        </PaginationContainer> */}
                                         {/* slider */}
-                                        <Slider_Wrapper>
+                                        <SliderWrapper>
                                             <AnimatePresence
                                                 initial={false}
                                                 onExitComplete={handleLeavingUpcoming}
                                                 // mode="wait"
                                                 custom={isBackUpcoming}
                                                 >
-                                                <Slider_Container
+                                                <SliderContainer
                                                     custom={isBackUpcoming}
                                                     variants={rowVariants} 
                                                     initial="hidden"
@@ -2548,9 +2546,9 @@ function Home() {
                                                         .slice(offset*indexUpcoming, offset*indexUpcoming + offset)
                                                         .map((movie) => (
                                                             
-                                                            <Slider_Item_Wrapper
-                                                                layoutId={movie.id + "_upcoming"}
-                                                                key={movie.id + "_upcoming"} 
+                                                            <SliderItemWrapper
+                                                                layoutId={movie.id + "upcoming"}
+                                                                key={movie.id + "upcoming"} 
                                                                 whileHover="hover"
                                                                 initial="normal"
                                                                 variants={boxVariants}
@@ -2559,16 +2557,16 @@ function Home() {
                                                                 transition={{ type: "tween" }}
                                                             >
                                                                 {/* <div> */}
-                                                                    <Slider_Item_Container>
+                                                                    <SliderItemContainer>
                                                                         {/* <div> */}
-                                                                            <Slider_Item>
-                                                                                <Slider_Img_Container onClick={() => handleDetailInfo(movie.id, movie.title)}>
+                                                                            <SliderItem>
+                                                                                <SliderImgContainer onClick={() => handleDetailInfo(movie.id, movie.title)}>
                                                                                     {/* img */}
                                                                                     <img 
                                                                                         decoding="async"
                                                                                         src={makeImagePath(movie.backdrop_path || movie.poster_path, "w500")} alt="" />
                                                                                     {/* title */}
-                                                                                    <Content_Play_Wrapper variants={infoVariants}>
+                                                                                    <ContentPlayWrapper variants={infoVariants}>
                                                                                         <svg 
                                                                                             style={{
                                                                                                 position: "relative",
@@ -2580,46 +2578,46 @@ function Home() {
                                                                                             <path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor">
                                                                                             </path>
                                                                                         </svg>
-                                                                                    </Content_Play_Wrapper>
-                                                                                    <Slider_Img_Title>
+                                                                                    </ContentPlayWrapper>
+                                                                                    <SliderImgTitle>
                                                                                         <p>{movie.title}</p>
-                                                                                    </Slider_Img_Title>
-                                                                                </Slider_Img_Container>   
-                                                                                {/* <Main_Title_Wrapper_ variants={infoVariants}>
-                                                                                    <Main_Title_>
+                                                                                    </SliderImgTitle>
+                                                                                </SliderImgContainer>   
+                                                                                {/* <MainTitleWrapperVar variants={infoVariants}>
+                                                                                    <MainTitleVar>
                                                                                         {movie.title}
-                                                                                    </Main_Title_>
-                                                                                </Main_Title_Wrapper_> */}
-                                                                                <Control_Button_Container variants={infoVariants}>
+                                                                                    </MainTitleVar>
+                                                                                </MainTitleWrapperVar> */}
+                                                                                <ControlButtonContainer variants={infoVariants}>
                                                                                     {/* 재생 */}
-                                                                                    <Play_Button_Wrapper>
-                                                                                        <Play_Button_Container>
-                                                                                            <Play_Button_Svg_Wrapper>
-                                                                                                <Play_Button_Svg>
+                                                                                    <PlayButtonWrapper>
+                                                                                        <PlayButtonContainer>
+                                                                                            <PlayButtonSvgWrapper>
+                                                                                                <PlayButtonSvg>
                                                                                                     <svg 
                                                                                                         style={{color: "white"}}
                                                                                                         xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="24" viewBox="0 0 24 24" role="img" data-icon="CircleIStandard" aria-hidden="true">
                                                                                                         <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor">
                                                                                                         </path>
                                                                                                     </svg>
-                                                                                                </Play_Button_Svg>
-                                                                                            </Play_Button_Svg_Wrapper>
-                                                                                            <Play_Button_Gap />
-                                                                                            <Play_Title 
+                                                                                                </PlayButtonSvg>
+                                                                                            </PlayButtonSvgWrapper>
+                                                                                            <PlayButtonGap />
+                                                                                            <PlayTitle 
                                                                                                 onClick={() => handleDetailInfo(movie.id, movie.title)}
-                                                                                                style={{color: "white"}}>상세 정보</Play_Title>
-                                                                                        </Play_Button_Container>
-                                                                                    </Play_Button_Wrapper>
+                                                                                                style={{color: "white"}}>상세 정보</PlayTitle>
+                                                                                        </PlayButtonContainer>
+                                                                                    </PlayButtonWrapper>
 
                                                                                     {/* 관심 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "20%",
                                                                                         }}
                                                                                         onClick={() => handleFavVideo(movie?.id, movie?.title, movie?.backdrop_path, movie?.poster_path, "")} key={"wish"} >
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not wish */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? favList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -2634,18 +2632,18 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
                                                                                     {/* 좋아요 */}
-                                                                                    <Wish_Button_Wrapper 
+                                                                                    <WishButtonWrapper 
                                                                                         style={{
                                                                                             position: "absolute",
                                                                                             right: "2%",
                                                                                         }}
                                                                                         onClick={() => handleVotedVideo(movie?.id)}  key={"like"}>
-                                                                                        <Wish_Button_Svg_Wrapper>
-                                                                                            <Wish_Button_Svg>
+                                                                                        <WishButtonSvgWrapper>
+                                                                                            <WishButtonSvg>
                                                                                                 {/* not like */}
                                                                                                 <svg 
                                                                                                     style={{display: movie?.id !== undefined ? votedList?.includes(movie?.id) ? "none" : "" : ""}}
@@ -2660,47 +2658,47 @@ function Home() {
                                                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M13.407 6.25579L13.313 5.50407C13.1342 4.07353 11.9181 3 10.4764 3C10.2133 3 10 3.21331 10 3.47644V6.7132C10 6.90062 9.94733 7.08427 9.848 7.2432L7.90742 10.3481C7.64516 10.7677 7.23665 11.0752 6.76086 11.2112L4.72528 11.7928C4.29598 11.9154 4 12.3078 4 12.7543V18.3161C4 18.6938 4.30618 19 4.68387 19C5.874 19 7.04352 19.3106 8.07684 19.9011L8.25 20C9.39679 20.6553 10.6947 21 12.0156 21H13H16H16.5C17.3284 21 18 20.3284 18 19.5C18 19.1158 17.8556 18.7654 17.6181 18.5H18C18.8284 18.5 19.5 17.8284 19.5 17C19.5 16.4601 19.2147 15.9868 18.7867 15.7226C19.478 15.5888 20 14.9804 20 14.25C20 13.4216 19.3284 12.75 18.5 12.75H18.3294C18.7336 12.4813 19 12.0217 19 11.5C19 10.6716 18.3284 10 17.5 10H13.125L13.407 7.74421C13.4688 7.24999 13.4688 6.75001 13.407 6.25579Z" fill="currentColor">
                                                                                                     </path>
                                                                                                 </svg>
-                                                                                            </Wish_Button_Svg>
-                                                                                        </Wish_Button_Svg_Wrapper>
-                                                                                    </Wish_Button_Wrapper>
+                                                                                            </WishButtonSvg>
+                                                                                        </WishButtonSvgWrapper>
+                                                                                    </WishButtonWrapper>
 
-                                                                                </Control_Button_Container>
-                                                                            </Slider_Item>
+                                                                                </ControlButtonContainer>
+                                                                            </SliderItem>
 
                                                                         {/* </div> */}
                                                                         {/* <div></div> */}
-                                                                    </Slider_Item_Container>
+                                                                    </SliderItemContainer>
                                                                 {/* </div> */}
 
-                                                            </Slider_Item_Wrapper>
+                                                            </SliderItemWrapper>
                                                             
                                                         ))
                                                     }
 
-                                                </Slider_Container>
+                                                </SliderContainer>
                                             </AnimatePresence>
-                                        </Slider_Wrapper>
+                                        </SliderWrapper>
                                         {/* 콘텐츠 더보기 */}
-                                        <Slider_Next_Wrapper 
+                                        <SliderNextWrapper 
                                             onClick={increaseIndexUpcoming}
                                             style={{right:0}}
                                         >
-                                            <Sldier_Next_Img style={{transform: "rotate(-180deg)"}} >
+                                            <SldierNextImg style={{transform: "rotate(-180deg)"}} >
                                                 <svg fill="white" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIosIcon">
                                                     <path d="M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
                                                     </path>
                                                 </svg>
-                                            </Sldier_Next_Img>
-                                        </Slider_Next_Wrapper>
-                                    </Slide_Content_Container>
-                                </Slide_Layer_Wrapper>
+                                            </SldierNextImg>
+                                        </SliderNextWrapper>
+                                    </SlideContentContainer>
+                                </SlideLayerWrapper>
                             </div>
-                        </Slide_Content_Wrapper>
-                    </Slide_Container>
+                        </SlideContentWrapper>
+                    </SlideContainer>
                     
                     
-                </MainView_Container>                                
-            </MainView_Wrapper>
+                </MainViewContainer>                                
+            </MainViewWrapper>
         {/* Popup */}
         {
             isOpenMainDetail && 
@@ -2713,7 +2711,7 @@ function Home() {
                 />
             </>
         }
-        </Body_Container>
+        </BodyContainer>
         
     );
 }
